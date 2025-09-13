@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>WAFFLES TECH | Ya existimos</title>
+  <link rel="stylesheet" href="css/style.css">
+  <div class="particles"></div>
+</head>
+<body>
+  <section class="hero fade-in">
+    <h1 class="glow">WAFFLES TECH</h1>
+    <p class="slogan">El futuro empezó aquí y continuará.</p>
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="nosotros.html">Nuetra Historia</a>
+    </nav>
+  </section>
+  <script src="js/main.js"></script>
+  <section class="capacitaciones">
+  <h2>🎮 Próximas Capacitaciones</h2>
+  <p>Explora nuestros cursos como si fueran un juego arcade 🚀</p>
+  <div class="game-grid">
+    <!-- Unity -->
+    <div class="cap-item" onclick="contacto('unity')">
+      <div class="pacman"></div>
+      <p>Unity – Desarrollo de Videojuegos</p>
+    </div>
+    <!-- Python -->
+    <div class="cap-item" onclick="contacto('python')">
+      <div class="pacman"></div>
+      <p>Automatizaciones con Python / Bussines INTELIGENCE</p>
+    </div>
+    <!-- aws -->
+    <div class="cap-item" onclick="contacto('python')">
+      <div class="pacman"></div>
+      <p> CAPACITATE SOBRE LA NUBE (AWS, AZURE )</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  function contacto(curso) {
+    let mensaje = encodeURIComponent(
+      `Hola, estoy interesado en la capacitación de ${curso.toUpperCase()} 🚀`
+    );
+    // WhatsApp o correo
+    window.open(
+      `https://wa.me/51977740994?text=${mensaje}`,
+      "_blank"
+    );
+    // También podrías redirigir al correo:
+    // window.location.href = "mailto:ceo@wafflestech.net?subject=Capacitación en " + curso;
+  }
+</script>
+ 
+<section class="game-section">
+  <h2>🐱 DEMO Arcade:PELEA PRESIDENTE </h2>
+ <p> Instrucciones</p>
+  <p>Presiona <b>Espacio</b> para saltar y <b>A+S</b> para saltar mas alto 🚀</p>
+  <p>Presiona <b>X</b> para lanzar proyectiles <b>X+P</b> para evolucionar 🚀</p>
+   <div class="hud">
+    <span id="score">Puntos: 0</span>
+    <span id="lives">❤️❤️❤️</span>
+    <button id="musicBtn">🎵 Música</button>
+  </div>
+  <canvas id="catGame" width="600" height="300"></canvas>
+  
+</section>
+<audio id="bgMusic" src="audio/musica.mp3" loop></audio>
+<audio id="bgMusic1" src="audio/level2.mp3" loop></audio>
+<script src="js/gamereal.js"></script>
+
+
+  <footer>
+  <p>Waffles Tech desde 2024 🚀</p>
+  <div class="social-icons">
+    <a href="https://github.com/tuusuario" target="_blank" title="GitHub">
+      <img src="assets/icons/github.svg" alt="GitHub">
+    </a>
+    <a href="https://linkedin.com/in/tuusuario" target="_blank" title="LinkedIn">
+      <img src="assets/icons/link.svg" alt="LinkedIn">
+    </a>
+    <a href="https://tiktok.com/@tuusuario" target="_blank" title="TikTok">
+      <img src="assets/icons/tik.svg" alt="TikTok">
+    </a>
+  </div>
+  <div class="particles"></div>
+</footer>
+
+</body>
+</html>
