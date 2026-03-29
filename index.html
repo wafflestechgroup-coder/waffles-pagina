@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAFFLES TECH | Ya existimos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-1: #6ee78a;
+      --green-2: #4ade80;
+      --green-3: #2d9d4c;
+      --green-4: #1a7a3a;
+      --gradient: linear-gradient(180deg, #6ee78a 0%, #4ade80 50%, #2d9d4c 100%);
+      --bg-white: #ffffff;
+      --bg-cream: #fafaf8;
+      --bg-offwhite: #f5f5f0;
+      --text-dark: #1a1a2e;
+      --text-gray: #666677;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    /* ===== FONDO ANIMADO CON CSS (SIN THREE.JS) ===== */
+    .animated-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      overflow: hidden;
+      background: linear-gradient(180deg, #fafaf8 0%, #f0f0e8 100%);
+    }
+
+    /* Edificios CSS animados */
+    .building {
+      position: absolute;
+      bottom: -100px;
+      background: var(--gradient);
+      opacity: 0.3;
+      animation: buildingFloat 15s linear infinite;
+    }
+
+    .building::before {
+      content: '';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    @keyframes buildingFloat {
+      0% {
+        transform: translateY(100vh) scale(0.8);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.3;
+      }
+      90% {
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1.2);
+        opacity: 0;
+      }
+    }
+
+    /* Partículas flotantes */
+    .particle {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      background: var(--green-2);
+      border-radius: 50%;
+      opacity: 0.4;
+      animation: particleFloat 20s linear infinite;
+    }
+
+    @keyframes particleFloat {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.4;
+      }
+      90% {
+        opacity: 0.4;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* Grid animado */
+    .grid-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background-image: 
+        linear-gradient(rgba(74, 222, 128, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 222, 128, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.6;
+      animation: gridMove 20s linear infinite;
+    }
+
+    @keyframes gridMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 60px 60px; }
+    }
+
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(26, 122, 58, 0.04) 2px, rgba(26, 122, 58, 0.04) 4px);
+      animation: scanMove 10s linear infinite;
+    }
+
+    @keyframes scanMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100px; }
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 1.5rem 2rem;
+      position: relative;
+    }
+
+    .logo-container {
+      margin-bottom: 2.5rem;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .logo-img {
+      max-width: 450px;
+      width: 90vw;
+      height: auto;
+      filter: drop-shadow(6px 6px 0px rgba(26, 122, 58, 0.25));
+      transition: all 0.3s ease;
+      animation: logoFloat 4s ease-in-out infinite;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.06) rotate(-1deg);
+      filter: drop-shadow(8px 8px 0px rgba(26, 122, 58, 0.35));
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slogan {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.65rem, 2.5vw, 0.95rem);
+      color: var(--text-gray);
+      margin-bottom: 3rem;
+      line-height: 2;
+      animation: fadeInUp 1s ease-out 0.3s both;
+      max-width: 700px;
+      padding: 0 1rem;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeInUp 1s ease-out 0.5s both;
+      padding: 0 1rem;
+    }
+
+    .nav a {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.55rem, 2vw, 0.65rem);
+      color: var(--green-4);
+      text-decoration: none;
+      padding: clamp(0.8rem, 2vw, 1rem) clamp(1.2rem, 3vw, 1.8rem);
+      border: 3px solid var(--green-3);
+      background: var(--bg-white);
+      box-shadow: 4px 4px 0px var(--green-3);
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .nav a:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 7px 7px 0px var(--green-4);
+      background: var(--gradient);
+      color: var(--bg-white);
+    }
+
+    .nav a:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-3);
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 4vw, 2rem);
+      position: relative;
+      background: var(--bg-white);
+      border-top: 4px solid var(--green-3);
+      border-bottom: 4px solid var(--green-3);
+    }
+
+    .section-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(1.3rem, 4vw, 2.2rem);
+      color: var(--green-4);
+      text-align: center;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      text-shadow: 3px 3px 0px rgba(74, 222, 128, 0.3);
+      padding: 0 1rem;
+    }
+
+    .section-subtitle {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.55rem, 2vw, 0.7rem);
+      color: var(--text-gray);
+      text-align: center;
+      margin-bottom: 3rem;
+      line-height: 2;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1rem;
+    }
+
+    /* ===== CAPACITACIONES ===== */
+    .capacitaciones { background: var(--bg-cream); }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .cap-item {
+      background: var(--bg-white);
+      border: 4px solid var(--green-3);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 6px 6px 0px var(--green-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cap-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .cap-item:hover::before { transform: scaleX(1); }
+
+    .cap-item:hover {
+      transform: translate(-5px, -5px);
+      box-shadow: 11px 11px 0px var(--green-4);
+    }
+
+    .cap-item:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-3);
+    }
+
+    .pacman {
+      width: clamp(60px, 15vw, 75px);
+      height: clamp(60px, 15vw, 75px);
+      background: var(--gradient);
+      border: 4px solid var(--green-4);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      box-shadow: 4px 4px 0px var(--green-4);
+      animation: chomp 0.4s step-end infinite;
+    }
+
+    @keyframes chomp {
+      0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%); }
+      50% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
+    }
+
+    .cap-item p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      color: var(--text-dark);
+      text-align: center;
+      line-height: 2;
+    }
+
+    /* ===== GAME SECTION ===== */
+    .game-section {
+      background: var(--bg-offwhite);
+      text-align: center;
+      border: 4px solid var(--green-3);
+      box-shadow: 8px 8px 0px var(--green-4);
+    }
+
+    .game-section h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(1rem, 3.5vw, 1.8rem);
+      color: var(--green-4);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      padding: 0 1rem;
+    }
+
+    .game-section p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.6rem);
+      color: var(--text-gray);
+      margin-bottom: 0.4rem;
+      line-height: 2.2;
+      padding: 0 1rem;
+    }
+
+    .game-section b { color: var(--green-3); }
+
+    .hud {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      padding: 0 1rem;
+    }
+
+    #score {
+      color: #d946ef;
+      background: var(--bg-white);
+      padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(1rem, 2.5vw, 1.3rem);
+      border: 3px solid #d946ef;
+      box-shadow: 3px 3px 0px #d946ef;
+    }
+
+    #lives {
+      color: #ef4444;
+      background: var(--bg-white);
+      padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(1rem, 2.5vw, 1.3rem);
+      border: 3px solid #ef4444;
+      box-shadow: 3px 3px 0px #ef4444;
+    }
+
+    #musicBtn {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      background: var(--gradient);
+      border: 3px solid var(--green-4);
+      padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(1rem, 2.5vw, 1.8rem);
+      cursor: pointer;
+      color: var(--bg-white);
+      box-shadow: 4px 4px 0px var(--green-4);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    #musicBtn:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 7px 7px 0px var(--green-4);
+    }
+
+    #musicBtn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-4);
+    }
+
+    #musicBtn.playing {
+      animation: btnPulse 0.4s step-end infinite;
+    }
+
+    @keyframes btnPulse {
+      0%, 100% { background: var(--gradient); }
+      50% { background: var(--green-4); }
+    }
+
+    .canvas-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      padding: 0 1rem;
+    }
+
+    #catGame {
+      border: 4px solid var(--green-3);
+      box-shadow: 6px 6px 0px var(--green-4);
+      max-width: 100%;
+      height: auto;
+      background: #1a1a2e;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-offwhite);
+      padding: clamp(3rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem) clamp(1.5rem, 3vw, 2rem);
+      text-align: center;
+      border-top: 4px solid var(--green-3);
+    }
+
+    footer p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.6rem);
+      color: var(--text-gray);
+      margin-bottom: 2rem;
+      line-height: 2.2;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      width: clamp(45px, 10vw, 55px);
+      height: clamp(45px, 10vw, 55px);
+      background: var(--bg-white);
+      border: 3px solid var(--green-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      box-shadow: 4px 4px 0px var(--green-3);
+    }
+
+    .social-icons a:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 8px 8px 0px var(--green-4);
+      background: var(--gradient);
+    }
+
+    .social-icons a:hover img { filter: brightness(0) invert(1); }
+
+    .social-icons a:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-3);
+    }
+
+    .social-icons img {
+      width: clamp(20px, 5vw, 26px);
+      height: clamp(20px, 5vw, 26px);
+      transition: filter 0.2s ease;
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 3px dashed var(--green-3);
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.4rem, 1.2vw, 0.5rem);
+      color: var(--text-gray);
+      line-height: 2.5;
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.7s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 14px; }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-offwhite);
+      border: 2px solid var(--green-3);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--gradient);
+      border: 2px solid var(--green-3);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--green-2); }
+
+    /* ===== PIXEL CORNERS ===== */
+    .pixel-corner {
+      position: fixed;
+      width: clamp(20px, 5vw, 25px);
+      height: clamp(20px, 5vw, 25px);
+      border: 3px solid var(--green-3);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .pixel-corner.tl { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+    .pixel-corner.tr { top: 15px; right: 15px; border-left: none; border-bottom: none; }
+    .pixel-corner.bl { bottom: 15px; left: 15px; border-right: none; border-top: none; }
+    .pixel-corner.br { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+    @media (max-width: 768px) {
+      .nav {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: center;
+      }
+      .nav a {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+      .game-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .hud {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: center;
+      }
+      #score, #lives, #musicBtn {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-img { max-width: 300px; }
+      .cap-item { padding: 1.5rem; }
+      .pixel-corner { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- FONDO ANIMADO CON CSS (FUNCIONA EN GITHUB) -->
+  <div class="animated-bg" id="animatedBg"></div>
+  <div class="grid-bg"></div>
+  <div class="scanlines"></div>
+
+  <!-- PIXEL CORNERS -->
+  <div class="pixel-corner tl"></div>
+  <div class="pixel-corner tr"></div>
+  <div class="pixel-corner bl"></div>
+  <div class="pixel-corner br"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="logo-container">
+      <img src="https://image.qwenlm.ai/public_source/134ee7b1-655c-4372-a2ff-a92db53e9a3d/1845a3733-8072-4100-aa1f-b666b70c2e2d.png" alt="Waffles Tech" class="logo-img">
+    </div>
+    
+    <p class="slogan">El futuro empezó aquí y continuará.</p>
+    
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="nosotros.html">Historia</a>
+    </nav>
+  </section>
+
+  <!-- CAPACITACIONES -->
+  <section class="capacitaciones reveal">
+    <h2 class="section-title">🎮 PRÓXIMAS CAPACITACIONES</h2>
+    <p class="section-subtitle">Explora nuestros cursos como si fueran un juego arcade 🚀</p>
+    
+    <div class="game-grid">
+      <div class="cap-item" onclick="contacto('unity')">
+        <div class="pacman">🎮</div>
+        <p>Unity – Desarrollo de Videojuegos</p>
+      </div>
+      
+      <div class="cap-item" onclick="contacto('python')">
+        <div class="pacman">🐍</div>
+        <p>Automatizaciones con Python / Business Intelligence</p>
+      </div>
+      
+      <div class="cap-item" onclick="contacto('cloud')">
+        <div class="pacman">☁️</div>
+        <p>Capacítate sobre la nube (AWS, Azure)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME SECTION -->
+  <section class="game-section reveal">
+    <h2>🐱 DEMO ARCADE: PELEA PRESIDENTE</h2>
+    <p>INSTRUCCIONES</p>
+    <p>PRESIONA <b>ESPACIO</b> PARA SALTAR Y <b>A+S</b> PARA SALTAR MÁS ALTO 🚀</p>
+    <p>PRESIONA <b>X</b> PARA LANZAR PROYECTILES <b>X+P</b> PARA EVOLUCIONAR 🚀</p>
+    
+    <div class="hud">
+      <span id="score">PUNTOS: 0</span>
+      <span id="lives">❤️❤️❤️</span>
+      <button id="musicBtn">🎵 MUSICA</button>
+    </div>
+    
+    <div class="canvas-container">
+      <canvas id="catGame" width="600" height="300"></canvas>
+    </div>
+  </section>
+
+  <!-- AUDIO -->
+  <audio id="bgMusic" src="audio/musica.mp3" loop></audio>
+  <audio id="bgMusic1" src="audio/level2.mp3" loop></audio>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>WAFFLES TECH DESDE 2024 🚀</p>
+    
+    <div class="social-icons">
+      <a href="https://github.com/tuusuario" target="_blank" title="GitHub">
+        <img src="assets/icons/github.svg" alt="GitHub">
+      </a>
+      <a href="https://linkedin.com/in/tuusuario" target="_blank" title="LinkedIn">
+        <img src="assets/icons/link.svg" alt="LinkedIn">
+      </a>
+      <a href="https://tiktok.com/@tuusuario" target="_blank" title="TikTok">
+        <img src="assets/icons/tik.svg" alt="TikTok">
+      </a>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2024 WAFFLES TECH. TODOS LOS DERECHOS RESERVADOS.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="gamereal.js"></script>
+  
+  <script>
+    // ===== GENERAR FONDO ANIMADO CON CSS =====
+    function createAnimatedBackground() {
+      const container = document.getElementById('animatedBg');
+      if (!container) return;
+
+      // Crear edificios
+      for (let i = 0; i < 15; i++) {
+        const building = document.createElement('div');
+        building.className = 'building';
+        building.style.width = (40 + Math.random() * 60) + 'px';
+        building.style.height = (100 + Math.random() * 200) + 'px';
+        building.style.left = (Math.random() * 100) + '%';
+        building.style.animationDelay = (Math.random() * 10) + 's';
+        building.style.animationDuration = (15 + Math.random() * 10) + 's';
+        container.appendChild(building);
+      }
+
+      // Crear partículas
+      for (let i = 0; i < 20; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+        particle.style.left = (Math.random() * 100) + '%';
+        particle.style.animationDelay = (Math.random() * 15) + 's';
+        particle.style.animationDuration = (15 + Math.random() * 15) + 's';
+        particle.style.width = (5 + Math.random() * 10) + 'px';
+        particle.style.height = particle.style.width;
+        container.appendChild(particle);
+      }
+    }
+
+    createAnimatedBackground();
+
+    // ===== SCROLL REVEAL =====
+    function revealOnScroll() {
+      document.querySelectorAll('.reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    // ===== CONTACTO =====
+    function contacto(curso) {
+      const msg = encodeURIComponent(`Hola, estoy interesado en la capacitación de ${curso.toUpperCase()} 🚀`);
+      window.open(`https://wa.me/51977740994?text=${msg}`, '_blank');
+    }
+
+    // ===== MUSICA =====
+    const musicBtn = document.getElementById('musicBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    let isPlaying = false;
+
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicBtn.textContent = '🎵 MUSICA';
+        musicBtn.classList.remove('playing');
+      } else {
+        bgMusic.play().catch(e => console.log('Audio:', e));
+        musicBtn.textContent = '⏸️ PAUSA';
+        musicBtn.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // ===== RESIZE CANVAS =====
+    function resizeCanvas() {
+      const container = document.querySelector('.canvas-container');
+      const canvas = document.getElementById('catGame');
+      if (container && canvas) {
+        const maxW = Math.min(600, container.clientWidth - 40);
+        canvas.style.width = maxW + 'px';
+        canvas.style.height = (maxW * 0.5) + 'px';
+      }
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    console.log('%c🧇 WAFFLES TECH', 'font-size: 28px; font-weight: bold; color: #2d9d4c;');
+    console.log('%cEL FUTURO EMPEZÓ AQUÍ', 'font-size: 14px; color: #1a7a3a;');
+  </script>
+</body>
+</html>
+
