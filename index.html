@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>WAFFLES TECH | Ya existimos</title>
-  <link rel="preconnect" href="fonts.googleapis.com">
-  <link rel="preconnect" href="fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <style>
@@ -74,6 +74,7 @@
       opacity: 0.6;
     }
 
+    /* ===== LOADER OPTIMIZADO ===== */
     .loader {
       position: fixed;
       top: 0;
@@ -86,28 +87,33 @@
       justify-content: center;
       align-items: center;
       z-index: 99999;
-      transition: opacity 0.5s ease, visibility 0.5s ease;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
     }
 
-    .loader.hidden { opacity: 0; visibility: hidden; }
+    .loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
 
     .loader-logo {
-      max-width: 250px;
-      animation: loaderBounce 1s ease-in-out infinite;
+      max-width: 200px;
+      width: 80vw;
+      animation: loaderBounce 0.8s ease-in-out infinite;
     }
 
     @keyframes loaderBounce {
       0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
+      50% { transform: translateY(-10px); }
     }
 
     .loader-text {
-      margin-top: 2rem;
+      margin-top: 1.5rem;
       font-family: 'Press Start 2P', cursive;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       color: var(--green-4);
-      letter-spacing: 3px;
-      animation: blink 0.8s step-end infinite;
+      letter-spacing: 2px;
+      animation: blink 0.6s step-end infinite;
     }
 
     @keyframes blink {
@@ -116,11 +122,11 @@
     }
 
     .loader-bar {
-      width: 220px;
-      height: 12px;
+      width: 180px;
+      height: 10px;
       background: var(--bg-offwhite);
       border: 3px solid var(--green-3);
-      margin-top: 1.5rem;
+      margin-top: 1rem;
       position: relative;
       overflow: hidden;
     }
@@ -133,7 +139,7 @@
       height: 100%;
       width: 0%;
       background: var(--gradient);
-      animation: loadBar 2s steps(20) forwards;
+      animation: loadBar 1s ease-in-out forwards;
     }
 
     @keyframes loadBar { to { width: 100%; } }
@@ -155,7 +161,7 @@
     }
 
     .logo-img {
-      max-width: 520px;
+      max-width: 450px;
       width: 90vw;
       height: auto;
       filter: drop-shadow(6px 6px 0px rgba(26, 122, 58, 0.25));
@@ -576,7 +582,7 @@
   <!-- LOADER -->
   <div class="loader" id="loader">
     <img src="https://image.qwenlm.ai/public_source/134ee7b1-655c-4372-a2ff-a92db53e9a3d/1845a3733-8072-4100-aa1f-b666b70c2e2d.png" alt="Waffles Tech" class="loader-logo">
-    <p class="loader-text">LOADING...</p>
+    <p class="loader-text">CARGANDO...</p>
     <div class="loader-bar"></div>
   </div>
 
@@ -679,293 +685,174 @@
   <script src="gamereal.js"></script>
   
   <script>
-    // ===== LOADER =====
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        document.getElementById('loader').classList.add('hidden');
-      }, 2000);
-    });
-
-    // ===== THREE.JS 3D CITY - FLY THROUGH EFFECT =====
-    function initThreeJS() {
-      const canvas = document.getElementById('three-bg');
-      const scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xfafaf8);
-      scene.fog = new THREE.Fog(0xfafaf8, 20, 80);
-      
-      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
-      
-      renderer.setSize(window.innerWidth, window.innerHeight);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-      renderer.shadowMap.enabled = true;
-
-      const buildingColors = [0x6ee78a, 0x4ade80, 0x2d9d4c, 0x1a7a3a, 0x86efac];
-      const allObjects = [];
-
-      // ===== EDIFICIOS QUE VOLARÁN HACIA LA CÁMARA =====
-      function createBuilding() {
-        const height = 4 + Math.random() * 15;
-        const width = 2 + Math.random() * 4;
-        const depth = 2 + Math.random() * 4;
-        
-        const buildingGeo = new THREE.BoxGeometry(width, height, depth);
-        const buildingMat = new THREE.MeshPhongMaterial({
-          color: buildingColors[Math.floor(Math.random() * buildingColors.length)],
-          shininess: 50
-        });
-        
-        const building = new THREE.Mesh(buildingGeo, buildingMat);
-        
-        // Posición inicial: lejos en el fondo, posición X/Y aleatoria
-        building.position.x = (Math.random() - 0.5) * 80;
-        building.position.y = (Math.random() - 0.5) * 50;
-        building.position.z = -80 - Math.random() * 40; // Lejos en el fondo
-        building.rotation.y = Math.random() * Math.PI / 4;
-        
-        // Ventanas
-        const windowsGroup = new THREE.Group();
-        const windowGeo = new THREE.BoxGeometry(0.2, 0.4, 0.15);
-        const windowMat = new THREE.MeshBasicMaterial({ color: 0xffffaa });
-        
-        const rows = Math.floor(height / 2);
-        const cols = Math.floor(width / 1);
-        
-        for (let row = 0; row < rows; row++) {
-          for (let col = 0; col < cols; col++) {
-            if (Math.random() > 0.4) {
-              const w1 = new THREE.Mesh(windowGeo, windowMat);
-              w1.position.set(-width/2 + 0.5 + col, -height/2 + 1.5 + row * 2, depth/2 + 0.1);
-              windowsGroup.add(w1);
-              
-              const w2 = new THREE.Mesh(windowGeo, windowMat);
-              w2.position.set(-width/2 + 0.5 + col, -height/2 + 1.5 + row * 2, -depth/2 - 0.1);
-              windowsGroup.add(w2);
-            }
-          }
-        }
-        
-        building.add(windowsGroup);
-        scene.add(building);
-        
-        return {
-          mesh: building,
-          windows: windowsGroup,
-          speed: 0.3 + Math.random() * 0.4, // Velocidad hacia la cámara
-          rotationSpeed: (Math.random() - 0.5) * 0.02
-        };
+    // ===== LOADER RÁPIDO =====
+    // Se quita al cargar la página o después de 1 segundo máximo
+    function hideLoader() {
+      const loader = document.getElementById('loader');
+      if (loader && !loader.classList.contains('hidden')) {
+        loader.classList.add('hidden');
       }
-
-      // Crear 40 edificios iniciales
-      for (let i = 0; i < 40; i++) {
-        allObjects.push(createBuilding());
-      }
-
-      // ===== RASCACIELOS CON ANTENAS =====
-      function createSkyscraper() {
-        const towerGeo = new THREE.CylinderGeometry(1, 1.5, 20 + Math.random() * 15, 6);
-        const towerMat = new THREE.MeshPhongMaterial({
-          color: 0x2d9d4c,
-          shininess: 80
-        });
-        
-        const tower = new THREE.Mesh(towerGeo, towerMat);
-        tower.position.x = (Math.random() - 0.5) * 70;
-        tower.position.y = (Math.random() - 0.5) * 40;
-        tower.position.z = -80 - Math.random() * 40;
-        
-        // Antena
-        const antennaGeo = new THREE.CylinderGeometry(0.15, 0.15, 4, 8);
-        const antennaMat = new THREE.MeshBasicMaterial({ color: 0x4ade80 });
-        const antenna = new THREE.Mesh(antennaGeo, antennaMat);
-        antenna.position.y = 12;
-        tower.add(antenna);
-        
-        // Luz parpadeante
-        const lightGeo = new THREE.SphereGeometry(0.4, 8, 8);
-        const lightMat = new THREE.MeshBasicMaterial({ color: 0xff4444 });
-        const light = new THREE.Mesh(lightGeo, lightMat);
-        light.position.y = 14;
-        tower.add(light);
-        
-        scene.add(tower);
-        
-        return {
-          mesh: tower,
-          light: light,
-          speed: 0.25 + Math.random() * 0.3,
-          rotationSpeed: (Math.random() - 0.5) * 0.01
-        };
-      }
-
-      for (let i = 0; i < 10; i++) {
-        allObjects.push(createSkyscraper());
-      }
-
-      // ===== ESFERAS DE ENERGÍA =====
-      function createEnergySphere() {
-        const sphereGeo = new THREE.SphereGeometry(2 + Math.random() * 2, 16, 16);
-        const sphereMat = new THREE.MeshPhongMaterial({
-          color: 0x4ade80,
-          transparent: true,
-          opacity: 0.6,
-          shininess: 100
-        });
-        
-        const sphere = new THREE.Mesh(sphereGeo, sphereMat);
-        sphere.position.x = (Math.random() - 0.5) * 80;
-        sphere.position.y = (Math.random() - 0.5) * 50;
-        sphere.position.z = -80 - Math.random() * 40;
-        
-        // Anillo
-        const ringGeo = new THREE.TorusGeometry(3.5, 0.25, 8, 24);
-        const ringMat = new THREE.MeshBasicMaterial({ color: 0x6ee78a });
-        const ring = new THREE.Mesh(ringGeo, ringMat);
-        ring.rotation.x = Math.PI / 2;
-        sphere.add(ring);
-        
-        scene.add(sphere);
-        
-        return {
-          mesh: sphere,
-          ring: ring,
-          speed: 0.5 + Math.random() * 0.3,
-          rotationSpeed: (Math.random() - 0.5) * 0.04
-        };
-      }
-
-      for (let i = 0; i < 8; i++) {
-        allObjects.push(createEnergySphere());
-      }
-
-      // ===== NAVE / DRON =====
-      const droneGroup = new THREE.Group();
-      
-      const bodyGeo = new THREE.ConeGeometry(1.2, 4, 8);
-      const bodyMat = new THREE.MeshPhongMaterial({ color: 0x2d9d4c, shininess: 100 });
-      const body = new THREE.Mesh(bodyGeo, bodyMat);
-      body.rotation.x = Math.PI / 2;
-      droneGroup.add(body);
-      
-      const wingGeo = new THREE.BoxGeometry(5, 0.3, 2);
-      const wingMat = new THREE.MeshPhongMaterial({ color: 0x4ade80 });
-      const wings = new THREE.Mesh(wingGeo, wingMat);
-      wings.position.z = 0.8;
-      droneGroup.add(wings);
-      
-      const lightGeo = new THREE.SphereGeometry(0.25, 8, 8);
-      const lightMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-      const lightL = new THREE.Mesh(lightGeo, lightMat);
-      lightL.position.set(-2.2, 0, 1.2);
-      droneGroup.add(lightL);
-      const lightR = new THREE.Mesh(lightGeo, lightMat);
-      lightR.position.set(2.2, 0, 1.2);
-      droneGroup.add(lightR);
-      
-      droneGroup.position.set(0, 5, -30);
-      scene.add(droneGroup);
-
-      // ===== GRID SUELO =====
-      const gridHelper = new THREE.GridHelper(200, 100, 0x2d9d4c, 0x1a7a3a);
-      gridHelper.position.y = -40;
-      gridHelper.material.opacity = 0.25;
-      gridHelper.material.transparent = true;
-      scene.add(gridHelper);
-
-      // ===== LUCES =====
-      const ambient = new THREE.AmbientLight(0xffffff, 0.7);
-      scene.add(ambient);
-
-      const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
-      dirLight.position.set(15, 30, 15);
-      dirLight.castShadow = true;
-      scene.add(dirLight);
-
-      const pointLight1 = new THREE.PointLight(0x4ade80, 0.7, 70);
-      pointLight1.position.set(-15, 15, 10);
-      scene.add(pointLight1);
-
-      camera.position.z = 15;
-      camera.position.y = 5;
-
-      // ===== ANIMACIÓN PRINCIPAL =====
-      let time = 0;
-      let droneAngle = 0;
-      let frameCount = 0;
-
-      function animate() {
-        requestAnimationFrame(animate);
-        time += 0.015;
-        frameCount++;
-
-        // Mover todos los objetos HACIA la cámara
-        allObjects.forEach((obj, index) => {
-          // Mover hacia adelante (Z positivo = hacia la cámara)
-          obj.mesh.position.z += obj.speed;
-          obj.mesh.rotation.y += obj.rotationSpeed;
-          
-          // Animaciones específicas
-          if (obj.windows) {
-            // Edificio - parpadeo de ventanas
-            obj.windows.children.forEach((w, idx) => {
-              if (idx % 3 === 0) {
-                w.material.opacity = 0.5 + Math.sin(time * 3 + idx) * 0.5;
-              }
-            });
-          }
-          
-          if (obj.light) {
-            // Rascacielos - luz parpadeante
-            obj.light.material.opacity = 0.5 + Math.sin(time * 5) * 0.5;
-          }
-          
-          if (obj.ring) {
-            // Esfera - anillo giratorio
-            obj.ring.rotation.z += 0.05;
-            obj.mesh.scale.setScalar(1 + Math.sin(time * 2) * 0.15);
-          }
-          
-          // ===== CUANDO PASA LA CÁMARA (Z > 20) =====
-          if (obj.mesh.position.z > 20) {
-            // Resetear al fondo con nueva posición aleatoria
-            obj.mesh.position.z = -120 - Math.random() * 30;
-            obj.mesh.position.x = (Math.random() - 0.5) * 80;
-            obj.mesh.position.y = (Math.random() - 0.5) * 50;
-            
-            // Nueva rotación aleatoria
-            obj.mesh.rotation.y = Math.random() * Math.PI;
-          }
-        });
-
-        // ===== DRON VOLANDO EN CÍRCULOS =====
-        droneAngle += 0.025;
-        droneGroup.position.x = Math.sin(droneAngle) * 30;
-        droneGroup.position.z = Math.cos(droneAngle) * 20 - 25;
-        droneGroup.rotation.y = -droneAngle + Math.PI / 2;
-        droneGroup.position.y = 5 + Math.sin(time * 3) * 4;
-
-        // Grid en movimiento
-        gridHelper.position.z = (frameCount * 0.5) % 2;
-
-        // Cámara con movimiento suave
-        camera.position.x = Math.sin(time * 0.25) * 5;
-        camera.position.y = 5 + Math.cos(time * 0.18) * 3;
-        camera.lookAt(0, 0, -15);
-
-        renderer.render(scene, camera);
-      }
-
-      animate();
-
-      // ===== RESIZE =====
-      window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-      });
     }
 
-    initThreeJS();
+    // Intentar quitar loader cuando todo esté listo
+    if (document.readyState === 'complete') {
+      hideLoader();
+    } else {
+      window.addEventListener('load', hideLoader);
+      // Fallback: quitar loader después de 1 segundo máximo
+      setTimeout(hideLoader, 1000);
+    }
+
+    // ===== THREE.JS 3D CITY OPTIMIZADO =====
+    function initThreeJS() {
+      const canvas = document.getElementById('three-bg');
+      if (!canvas) return;
+      
+      // Verificar si Three.js está disponible
+      if (typeof THREE === 'undefined') {
+        console.log('Three.js no cargó, usando fondo estático');
+        return;
+      }
+
+      try {
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xfafaf8);
+        scene.fog = new THREE.Fog(0xfafaf8, 30, 70);
+        
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+          canvas: canvas, 
+          alpha: true, 
+          antialias: false, // Mejor performance
+          powerPreference: 'low-power' // Menos consumo
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5)); // Limitar pixel ratio
+
+        const buildingColors = [0x6ee78a, 0x4ade80, 0x2d9d4c, 0x1a7a3a];
+        const allObjects = [];
+
+        // ===== EDIFICIOS SIMPLES (OPTIMIZADO) =====
+        function createBuilding() {
+          const height = 5 + Math.random() * 12;
+          const width = 3 + Math.random() * 3;
+          const depth = 3 + Math.random() * 3;
+          
+          const buildingGeo = new THREE.BoxGeometry(width, height, depth);
+          const buildingMat = new THREE.MeshPhongMaterial({
+            color: buildingColors[Math.floor(Math.random() * buildingColors.length)],
+            shininess: 30
+          });
+          
+          const building = new THREE.Mesh(buildingGeo, buildingMat);
+          building.position.x = (Math.random() - 0.5) * 60;
+          building.position.y = (Math.random() - 0.5) * 40;
+          building.position.z = -60 - Math.random() * 30;
+          
+          scene.add(building);
+          
+          return {
+            mesh: building,
+            speed: 0.4 + Math.random() * 0.3,
+            rotationSpeed: (Math.random() - 0.5) * 0.015
+          };
+        }
+
+        // Crear 20 edificios (menos = más rápido)
+        for (let i = 0; i < 20; i++) {
+          allObjects.push(createBuilding());
+        }
+
+        // ===== ESFERAS DE ENERGÍA SIMPLES =====
+        function createEnergySphere() {
+          const sphereGeo = new THREE.SphereGeometry(2, 12, 12); // Menos segmentos
+          const sphereMat = new THREE.MeshPhongMaterial({
+            color: 0x4ade80,
+            transparent: true,
+            opacity: 0.5,
+            shininess: 50
+          });
+          
+          const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+          sphere.position.x = (Math.random() - 0.5) * 60;
+          sphere.position.y = (Math.random() - 0.5) * 40;
+          sphere.position.z = -60 - Math.random() * 30;
+          
+          scene.add(sphere);
+          
+          return {
+            mesh: sphere,
+            speed: 0.6 + Math.random() * 0.2,
+            rotationSpeed: (Math.random() - 0.5) * 0.03
+          };
+        }
+
+        for (let i = 0; i < 5; i++) {
+          allObjects.push(createEnergySphere());
+        }
+
+        // ===== GRID SUELO =====
+        const gridHelper = new THREE.GridHelper(150, 50, 0x2d9d4c, 0x1a7a3a);
+        gridHelper.position.y = -30;
+        gridHelper.material.opacity = 0.2;
+        gridHelper.material.transparent = true;
+        scene.add(gridHelper);
+
+        // ===== LUCES =====
+        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambient);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.7);
+        dirLight.position.set(10, 20, 10);
+        scene.add(dirLight);
+
+        camera.position.z = 10;
+        camera.position.y = 3;
+
+        // ===== ANIMACIÓN OPTIMIZADA =====
+        let time = 0;
+
+        function animate() {
+          requestAnimationFrame(animate);
+          time += 0.015;
+
+          allObjects.forEach(obj => {
+            obj.mesh.position.z += obj.speed;
+            obj.mesh.rotation.y += obj.rotationSpeed;
+            
+            // Reset cuando pasa la cámara
+            if (obj.mesh.position.z > 15) {
+              obj.mesh.position.z = -90;
+              obj.mesh.position.x = (Math.random() - 0.5) * 60;
+              obj.mesh.position.y = (Math.random() - 0.5) * 40;
+            }
+          });
+
+          gridHelper.position.z = (time * 10) % 3;
+
+          camera.position.x = Math.sin(time * 0.2) * 3;
+          camera.position.y = 3 + Math.cos(time * 0.15) * 2;
+          camera.lookAt(0, 0, -10);
+
+          renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // ===== RESIZE =====
+        window.addEventListener('resize', () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+      } catch (error) {
+        console.log('Error en Three.js:', error);
+      }
+    }
+
+    // Inicializar Three.js después de un pequeño delay
+    setTimeout(initThreeJS, 100);
 
     // ===== SCROLL REVEAL =====
     function revealOnScroll() {
@@ -1058,7 +945,6 @@
     resizeCanvas();
 
     console.log('%c🧇 WAFFLES TECH', 'font-size: 28px; font-weight: bold; color: #2d9d4c;');
-    console.log('%cEL FUTURO EMPEZÓ AQUÍ', 'font-size: 14px; color: #1a7a3a;');
   </script>
 </body>
 </html>
