@@ -1,0 +1,1034 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAFFLES TECH | Ya existimos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --green-1: #6ee78a;
+      --green-2: #4ade80;
+      --green-3: #2d9d4c;
+      --green-4: #1a7a3a;
+      --green-5: #0f5c2a;
+      --gradient: linear-gradient(180deg, #6ee78a 0%, #4ade80 50%, #2d9d4c 100%);
+      --bg-white: #ffffff;
+      --bg-cream: #fafaf8;
+      --bg-offwhite: #f5f5f0;
+      --text-dark: #1a1a2e;
+      --text-gray: #666677;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+      padding-top: 80px; /* Espacio para header fijo */
+    }
+
+    /* ===== HEADER FIJO RESPONSIVO ===== */
+    .header-fixed {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 70px;
+      background: rgba(250, 250, 248, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 4px solid var(--green-3);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 1.5rem;
+      box-shadow: 0 4px 20px rgba(26, 122, 58, 0.2);
+    }
+
+    .header-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .header-logo img {
+      height: 45px;
+      width: auto;
+      filter: drop-shadow(3px 3px 0px rgba(26, 122, 58, 0.3));
+      animation: logoBounce 2s ease-in-out infinite;
+    }
+
+    @keyframes logoBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .header-logo span {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.7rem, 2.5vw, 1rem);
+      color: var(--green-4);
+      text-shadow: 2px 2px 0px rgba(74, 222, 128, 0.3);
+    }
+
+    .nav-desktop {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .nav-desktop a {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      color: var(--green-4);
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border: 2px solid var(--green-3);
+      background: var(--bg-white);
+      box-shadow: 3px 3px 0px var(--green-3);
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .nav-desktop a:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px var(--green-4);
+      background: var(--gradient);
+      color: var(--bg-white);
+    }
+
+    .nav-desktop a:active {
+      transform: translate(1px, 1px);
+      box-shadow: 1px 1px 0px var(--green-3);
+    }
+
+    /* Menu hamburguesa para móvil */
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 5px;
+      z-index: 1001;
+    }
+
+    .menu-toggle span {
+      width: 28px;
+      height: 3px;
+      background: var(--green-4);
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+
+    .menu-toggle.active span:nth-child(1) {
+      transform: rotate(45deg) translate(7px, 7px);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      transform: rotate(-45deg) translate(7px, -7px);
+    }
+
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 70px;
+      left: 0;
+      width: 100%;
+      background: rgba(250, 250, 248, 0.98);
+      border-bottom: 4px solid var(--green-3);
+      padding: 1.5rem;
+      flex-direction: column;
+      gap: 1rem;
+      box-shadow: 0 10px 30px rgba(26, 122, 58, 0.2);
+      z-index: 999;
+    }
+
+    .nav-mobile.active {
+      display: flex;
+      animation: slideDown 0.3s ease-out;
+    }
+
+    @keyframes slideDown {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .nav-mobile a {
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.7rem;
+      color: var(--green-4);
+      text-decoration: none;
+      padding: 1rem;
+      border: 2px solid var(--green-3);
+      background: var(--bg-white);
+      box-shadow: 3px 3px 0px var(--green-3);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    /* ===== ESCENA 3D PRINCIPAL ===== */
+    .scene-3d-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100%;
+      max-width: 900px;
+      height: 450px;
+      z-index: 0;
+      perspective: 1000px;
+      pointer-events: none;
+      overflow: visible;
+    }
+
+    .scene-3d {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+    }
+
+    /* SUELO 3D */
+    .floor-3d {
+      position: absolute;
+      bottom: 30px;
+      left: 5%;
+      width: 90%;
+      height: 80px;
+      background: linear-gradient(180deg, var(--green-4) 0%, var(--green-5) 100%);
+      border: 4px solid var(--green-3);
+      transform: rotateX(60deg);
+      box-shadow: 0 15px 30px rgba(26, 122, 58, 0.4);
+    }
+
+    .floor-3d::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.15) 2px, transparent 2px),
+        linear-gradient(90deg, rgba(255,255,255,0.15) 2px, transparent 2px);
+      background-size: 25px 25px;
+    }
+
+    /* PERSONAJE GABINETE 3D */
+    .character-3d {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 130px;
+      transform-style: preserve-3d;
+      animation: characterIdle 3s ease-in-out infinite;
+    }
+
+    @keyframes characterIdle {
+      0%, 100% { transform: translateX(-50%) rotateY(0deg) translateY(0); }
+      50% { transform: translateX(-50%) rotateY(15deg) translateY(-8px); }
+    }
+
+    .character-3d.jump {
+      animation: characterJump 0.6s ease-out !important;
+    }
+
+    @keyframes characterJump {
+      0% { transform: translateX(-50%) rotateY(0deg) translateY(0); }
+      50% { transform: translateX(-50%) rotateY(20deg) translateY(-100px); }
+      100% { transform: translateX(-50%) rotateY(0deg) translateY(0); }
+    }
+
+    .char-body {
+      position: absolute;
+      width: 70px;
+      height: 90px;
+      background: linear-gradient(135deg, var(--green-3) 0%, var(--green-4) 100%);
+      border: 4px solid var(--green-4);
+      border-radius: 12px;
+      left: 15px;
+      bottom: 0;
+      box-shadow: 
+        inset 6px 0 12px rgba(255,255,255,0.25),
+        inset -6px 0 12px rgba(0,0,0,0.35),
+        6px 6px 0px rgba(26, 122, 58, 0.5);
+    }
+
+    .char-body::before {
+      content: '';
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      right: 12px;
+      height: 45px;
+      background: linear-gradient(180deg, #1a1a2e 0%, #2d2d44 100%);
+      border: 3px solid var(--green-2);
+      border-radius: 6px;
+    }
+
+    .char-body::after {
+      content: '🧇';
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 28px;
+    }
+
+    .char-head {
+      position: absolute;
+      width: 60px;
+      height: 45px;
+      background: linear-gradient(135deg, var(--green-2) 0%, var(--green-3) 100%);
+      border: 4px solid var(--green-4);
+      border-radius: 18px 18px 12px 12px;
+      left: 20px;
+      bottom: 85px;
+      box-shadow: 
+        inset 4px 0 10px rgba(255,255,255,0.25),
+        inset -4px 0 10px rgba(0,0,0,0.35);
+    }
+
+    .char-head::before {
+      content: '';
+      position: absolute;
+      top: 14px;
+      left: 12px;
+      width: 12px;
+      height: 12px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: 24px 0 0 #fff;
+    }
+
+    .char-head::after {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 16px;
+      width: 6px;
+      height: 6px;
+      background: #1a1a2e;
+      border-radius: 50%;
+      box-shadow: 24px 0 0 #1a1a2e;
+      animation: blink 4s ease-in-out infinite;
+    }
+
+    @keyframes blink {
+      0%, 45%, 55%, 100% { transform: scaleY(1); }
+      50% { transform: scaleY(0.1); }
+    }
+
+    .char-ears {
+      position: absolute;
+      top: -8px;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 8px;
+    }
+
+    .ear {
+      width: 14px;
+      height: 18px;
+      background: var(--green-3);
+      border: 2px solid var(--green-4);
+      border-radius: 8px 8px 0 0;
+    }
+
+    .char-legs {
+      position: absolute;
+      bottom: 0;
+      left: 25px;
+      width: 50px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .leg {
+      width: 18px;
+      height: 30px;
+      background: linear-gradient(180deg, var(--green-3) 0%, var(--green-4) 100%);
+      border: 3px solid var(--green-4);
+      border-radius: 6px;
+      animation: legWalk 1s ease-in-out infinite;
+    }
+
+    .leg:nth-child(2) {
+      animation-delay: 0.5s;
+    }
+
+    @keyframes legWalk {
+      0%, 100% { transform: translateY(0) rotate(-10deg); }
+      50% { transform: translateY(-10px) rotate(10deg); }
+    }
+
+    .char-arm {
+      position: absolute;
+      width: 14px;
+      height: 40px;
+      background: linear-gradient(180deg, var(--green-2) 0%, var(--green-3) 100%);
+      border: 3px solid var(--green-4);
+      border-radius: 8px;
+      bottom: 45px;
+      animation: armSwing 1s ease-in-out infinite;
+    }
+
+    .arm-left {
+      left: 8px;
+      transform-origin: top center;
+    }
+
+    .arm-right {
+      right: 8px;
+      transform-origin: top center;
+      animation-delay: 0.5s;
+    }
+
+    @keyframes armSwing {
+      0%, 100% { transform: rotate(-20deg); }
+      50% { transform: rotate(20deg); }
+    }
+
+    /* OBJETOS VERDES FLOTANTES 3D */
+    .floating-objects {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .green-object {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 12px;
+      transform-style: preserve-3d;
+      animation: floatRotate 10s linear infinite;
+      box-shadow: 
+        inset 6px 6px 12px rgba(255,255,255,0.35),
+        inset -6px -6px 12px rgba(0,0,0,0.35),
+        6px 6px 20px rgba(26, 122, 58, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+    }
+
+    @keyframes floatRotate {
+      0% {
+        transform: translateY(150px) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px) rotateY(360deg) rotateX(180deg) rotateZ(180deg);
+        opacity: 0;
+      }
+    }
+
+    /* EDIFICIOS 3D DE FONDO */
+    .building-3d {
+      position: absolute;
+      bottom: 60px;
+      background: linear-gradient(180deg, var(--green-3) 0%, var(--green-4) 100%);
+      opacity: 0.25;
+      transform-style: preserve-3d;
+      animation: buildingMove 25s linear infinite;
+      border: 3px solid var(--green-4);
+    }
+
+    .building-3d::before {
+      content: '';
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      right: 8px;
+      bottom: 8px;
+      background: rgba(255,255,255,0.1);
+    }
+
+    .building-3d::after {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 15px;
+      right: 15px;
+      bottom: 15px;
+      background-image: 
+        linear-gradient(rgba(255,255,255,0.2) 3px, transparent 3px),
+        linear-gradient(90deg, rgba(255,255,255,0.2) 3px, transparent 3px);
+      background-size: 20px 20px;
+    }
+
+    @keyframes buildingMove {
+      0% {
+        transform: translateX(-100px) scale(0.7);
+        opacity: 0;
+      }
+      10% {
+        opacity: 0.25;
+      }
+      90% {
+        opacity: 0.25;
+      }
+      100% {
+        transform: translateX(100px) scale(1.3);
+        opacity: 0;
+      }
+    }
+
+    /* ===== HERO CONTENT ===== */
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      min-height: calc(100vh - 70px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem 1.5rem;
+      background: linear-gradient(180deg, transparent 0%, var(--bg-cream) 100%);
+    }
+
+    .hero-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(1.5rem, 5vw, 2.5rem);
+      color: var(--green-4);
+      margin-bottom: 1rem;
+      text-shadow: 4px 4px 0px rgba(74, 222, 128, 0.3);
+      animation: titlePulse 2s ease-in-out infinite;
+    }
+
+    @keyframes titlePulse {
+      0%, 100% { filter: drop-shadow(0 0 10px rgba(74, 222, 128, 0.4)); }
+      50% { filter: drop-shadow(0 0 25px rgba(74, 222, 128, 0.7)); }
+    }
+
+    .hero-slogan {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.6rem, 2vw, 0.9rem);
+      color: var(--text-gray);
+      margin-bottom: 2rem;
+      line-height: 2;
+      max-width: 600px;
+    }
+
+    /* ===== SECTIONS ===== */
+    section {
+      padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 4vw, 2rem);
+      position: relative;
+      background: var(--bg-white);
+      border-top: 4px solid var(--green-3);
+      border-bottom: 4px solid var(--green-3);
+      z-index: 10;
+    }
+
+    .section-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      color: var(--green-4);
+      text-align: center;
+      margin-bottom: 1rem;
+      text-shadow: 3px 3px 0px rgba(74, 222, 128, 0.3);
+    }
+
+    .section-subtitle {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      color: var(--text-gray);
+      text-align: center;
+      margin-bottom: 3rem;
+      line-height: 2;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .capacitaciones { background: var(--bg-cream); }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .cap-item {
+      background: var(--bg-white);
+      border: 4px solid var(--green-3);
+      padding: 2rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 6px 6px 0px var(--green-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cap-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .cap-item:hover::before { transform: scaleX(1); }
+
+    .cap-item:hover {
+      transform: translate(-5px, -5px);
+      box-shadow: 11px 11px 0px var(--green-4);
+    }
+
+    .cap-item:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-3);
+    }
+
+    .pacman {
+      width: 70px;
+      height: 70px;
+      background: var(--gradient);
+      border: 4px solid var(--green-4);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      box-shadow: 4px 4px 0px var(--green-4);
+      animation: chomp 0.4s step-end infinite;
+    }
+
+    @keyframes chomp {
+      0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%); }
+      50% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
+    }
+
+    .cap-item p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.45rem, 1.3vw, 0.6rem);
+      color: var(--text-dark);
+      text-align: center;
+      line-height: 2;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--bg-offwhite);
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      border-top: 4px solid var(--green-3);
+      z-index: 10;
+      position: relative;
+    }
+
+    footer p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.45rem, 1.3vw, 0.6rem);
+      color: var(--text-gray);
+      margin-bottom: 1.5rem;
+      line-height: 2;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      width: 50px;
+      height: 50px;
+      background: var(--bg-white);
+      border: 3px solid var(--green-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      box-shadow: 4px 4px 0px var(--green-3);
+    }
+
+    .social-icons a:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 8px 8px 0px var(--green-4);
+      background: var(--gradient);
+    }
+
+    .social-icons a:hover img { filter: brightness(0) invert(1); }
+
+    .social-icons img {
+      width: 22px;
+      height: 22px;
+      transition: filter 0.2s ease;
+    }
+
+    .footer-bottom {
+      padding-top: 1.5rem;
+      border-top: 3px dashed var(--green-3);
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.4rem, 1vw, 0.5rem);
+      color: var(--text-gray);
+    }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.7s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .nav-desktop {
+        display: none;
+      }
+
+      .menu-toggle {
+        display: flex;
+      }
+
+      .scene-3d-container {
+        height: 350px;
+        max-width: 100%;
+      }
+
+      .character-3d {
+        width: 80px;
+        height: 100px;
+        bottom: 60px;
+      }
+
+      .char-body {
+        width: 55px;
+        height: 70px;
+      }
+
+      .char-head {
+        width: 45px;
+        height: 35px;
+        bottom: 65px;
+      }
+
+      .floor-3d {
+        height: 60px;
+      }
+
+      .green-object {
+        width: 35px;
+        height: 35px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .header-fixed {
+        padding: 0 1rem;
+        height: 60px;
+      }
+
+      .header-logo img {
+        height: 35px;
+      }
+
+      .header-logo span {
+        font-size: 0.65rem;
+      }
+
+      .scene-3d-container {
+        height: 280px;
+      }
+
+      .character-3d {
+        width: 65px;
+        height: 85px;
+        bottom: 50px;
+      }
+
+      .hero-content {
+        padding: 1.5rem 1rem;
+      }
+
+      .cap-item {
+        padding: 1.5rem;
+      }
+    }
+
+    /* ===== SCROLLBAR ===== */
+    ::-webkit-scrollbar { width: 12px; }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-offwhite);
+      border: 2px solid var(--green-3);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--gradient);
+      border: 2px solid var(--green-3);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--green-2); }
+  </style>
+</head>
+<body>
+  <!-- HEADER FIJO -->
+  <header class="header-fixed">
+    <div class="header-logo">
+      <img src="https://image.qwenlm.ai/public_source/134ee7b1-655c-4372-a2ff-a92db53e9a3d/1845a3733-8072-4100-aa1f-b666b70c2e2d.png" alt="Waffles Tech">
+      <span>WAFFLES TECH</span>
+    </div>
+
+    <nav class="nav-desktop">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="nosotros.html">Historia</a>
+    </nav>
+
+    <div class="menu-toggle" id="menuToggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+  </header>
+
+  <!-- NAV MÓVIL -->
+  <nav class="nav-mobile" id="navMobile">
+    <a href="index.html">🏠 Inicio</a>
+    <a href="servicios.html">💼 Servicios</a>
+    <a href="contacto.html">📧 Contacto</a>
+    <a href="nosotros.html">📖 Historia</a>
+  </nav>
+
+  <!-- FONDO -->
+  <div class="grid-bg"></div>
+  <div class="scanlines"></div>
+
+  <!-- ESCENA 3D PRINCIPAL -->
+  <div class="scene-3d-container" id="scene3d">
+    <div class="scene-3d">
+      <!-- Suelo 3D -->
+      <div class="floor-3d"></div>
+
+      <!-- Personaje Gabinete -->
+      <div class="character-3d" id="character">
+        <div class="char-head">
+          <div class="char-ears">
+            <div class="ear"></div>
+            <div class="ear"></div>
+          </div>
+        </div>
+        <div class="char-body"></div>
+        <div class="char-arm arm-left"></div>
+        <div class="char-arm arm-right"></div>
+        <div class="char-legs">
+          <div class="leg"></div>
+          <div class="leg"></div>
+        </div>
+      </div>
+
+      <!-- Objetos Verdes Flotantes -->
+      <div class="floating-objects" id="floatingObjects"></div>
+
+      <!-- Edificios 3D -->
+      <div id="buildings3d"></div>
+    </div>
+  </div>
+
+  <!-- HERO CONTENT -->
+  <div class="hero-content">
+    <h1 class="hero-title">WAFFLES TECH</h1>
+    <p class="hero-slogan">El futuro empezó aquí y continuará. 🚀</p>
+  </div>
+
+  <!-- CAPACITACIONES -->
+  <section class="capacitaciones reveal">
+    <h2 class="section-title">🎮 PRÓXIMAS CAPACITACIONES</h2>
+    <p class="section-subtitle">Explora nuestros cursos como si fueran un juego arcade 🚀</p>
+    
+    <div class="game-grid">
+      <div class="cap-item" onclick="contacto('unity')">
+        <div class="pacman">🎮</div>
+        <p>Unity – Desarrollo de Videojuegos</p>
+      </div>
+      
+      <div class="cap-item" onclick="contacto('python')">
+        <div class="pacman">🐍</div>
+        <p>Python / Business Intelligence</p>
+      </div>
+      
+      <div class="cap-item" onclick="contacto('cloud')">
+        <div class="pacman">☁️</div>
+        <p>Cloud (AWS, Azure)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>WAFFLES TECH DESDE 2024 🚀</p>
+    
+    <div class="social-icons">
+      <a href="https://github.com/tuusuario" target="_blank" title="GitHub">
+        <img src="assets/icons/github.svg" alt="GitHub">
+      </a>
+      <a href="https://linkedin.com/in/tuusuario" target="_blank" title="LinkedIn">
+        <img src="assets/icons/link.svg" alt="LinkedIn">
+      </a>
+      <a href="https://tiktok.com/@tuusuario" target="_blank" title="TikTok">
+        <img src="assets/icons/tik.svg" alt="TikTok">
+      </a>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2024 WAFFLES TECH. TODOS LOS DERECHOS RESERVADOS.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ===== MENU MÓVIL =====
+    const menuToggle = document.getElementById('menuToggle');
+    const navMobile = document.getElementById('navMobile');
+
+    menuToggle.addEventListener('click', () => {
+      menuToggle.classList.toggle('active');
+      navMobile.classList.toggle('active');
+    });
+
+    // Cerrar menú al hacer click en un enlace
+    navMobile.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', () => {
+        menuToggle.classList.remove('active');
+        navMobile.classList.remove('active');
+      });
+    });
+
+    // ===== GENERAR OBJETOS VERDES =====
+    function createFloatingObjects() {
+      const container = document.getElementById('floatingObjects');
+      if (!container) return;
+
+      const greenShades = [
+        '#6ee78a', '#4ade80', '#2d9d4c', '#1a7a3a', '#0f5c2a',
+        '#86efac', '#22c55e', '#16a34a', '#15803d', '#14532d'
+      ];
+
+      const emojis = ['💎', '🌿', '💚', '🍀', '🎮', '🧇', '⚡', '🚀'];
+
+      for (let i = 0; i < 12; i++) {
+        const obj = document.createElement('div');
+        obj.className = 'green-object';
+        obj.style.left = (Math.random() * 85 + 5) + '%';
+        obj.style.background = `linear-gradient(135deg, ${greenShades[Math.floor(Math.random() * greenShades.length)]} 0%, ${greenShades[Math.floor(Math.random() * greenShades.length)]} 100%)`;
+        obj.style.animationDelay = (Math.random() * 10) + 's';
+        obj.style.animationDuration = (8 + Math.random() * 6) + 's';
+        obj.innerHTML = emojis[Math.floor(Math.random() * emojis.length)];
+        container.appendChild(obj);
+      }
+    }
+
+    // ===== GENERAR EDIFICIOS 3D =====
+    function createBuildings3D() {
+      const container = document.getElementById('buildings3d');
+      if (!container) return;
+
+      for (let i = 0; i < 8; i++) {
+        const building = document.createElement('div');
+        building.className = 'building-3d';
+        building.style.width = (50 + Math.random() * 80) + 'px';
+        building.style.height = (120 + Math.random() * 180) + 'px';
+        building.style.left = (Math.random() * 90) + '%';
+        building.style.animationDelay = (Math.random() * 15) + 's';
+        building.style.animationDuration = (20 + Math.random() * 15) + 's';
+        container.appendChild(building);
+      }
+    }
+
+    // ===== PERSONAJE SALTA AL SCROLL =====
+    function characterJumpOnScroll() {
+      const character = document.getElementById('character');
+      if (!character) return;
+
+      let lastScroll = 0;
+      let isJumping = false;
+
+      window.addEventListener('scroll', () => {
+        const currentScroll = window.pageYOffset;
+        const scrollDiff = Math.abs(currentScroll - lastScroll);
+
+        if (scrollDiff > 80 && !isJumping) {
+          isJumping = true;
+          character.classList.add('jump');
+          
+          setTimeout(() => {
+            character.classList.remove('jump');
+            isJumping = false;
+          }, 600);
+        }
+
+        lastScroll = currentScroll;
+      });
+    }
+
+    // ===== SCROLL REVEAL =====
+    function revealOnScroll() {
+      document.querySelectorAll('.reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    }
+
+    // ===== CONTACTO =====
+    function contacto(curso) {
+      const msg = encodeURIComponent(`Hola, estoy interesado en la capacitación de ${curso.toUpperCase()} 🚀`);
+      window.open(`https://wa.me/51977740994?text=${msg}`, '_blank');
+    }
+
+    // ===== INICIALIZAR =====
+    document.addEventListener('DOMContentLoaded', () => {
+      createFloatingObjects();
+      createBuildings3D();
+      characterJumpOnScroll();
+      revealOnScroll();
+    });
+
+    window.addEventListener('scroll', revealOnScroll);
+
+    console.log('%c🧇 WAFFLES TECH', 'font-size: 28px; font-weight: bold; color: #2d9d4c;');
+    console.log('%cEL FUTURO EMPEZÓ AQUÍ', 'font-size: 14px; color: #1a7a3a;');
+  </script>
+</body>
+</html>
+
