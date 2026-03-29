@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WAFFLES TECH | Ya existimos</title>
+  <link rel="preconnect" href="fonts.googleapis.com">
+  <link rel="preconnect" href="fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    :root {
+      --green-1: #6ee78a;
+      --green-2: #4ade80;
+      --green-3: #2d9d4c;
+      --green-4: #1a7a3a;
+      --gradient: linear-gradient(180deg, #6ee78a 0%, #4ade80 50%, #2d9d4c 100%);
+      --bg-white: #ffffff;
+      --bg-cream: #fafaf8;
+      --bg-offwhite: #f5f5f0;
+      --text-dark: #1a1a2e;
+      --text-gray: #666677;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    #three-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(26, 122, 58, 0.04) 2px, rgba(26, 122, 58, 0.04) 4px);
+      animation: scanMove 10s linear infinite;
+    }
+
+    @keyframes scanMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100px; }
+    }
+
+    .retro-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background-image: 
+        linear-gradient(rgba(74, 222, 128, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 222, 128, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.6;
+    }
+
+    .loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg-white);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 99999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .loader.hidden { opacity: 0; visibility: hidden; }
+
+    .loader-logo {
+      max-width: 250px;
+      animation: loaderBounce 1s ease-in-out infinite;
+    }
+
+    @keyframes loaderBounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    .loader-text {
+      margin-top: 2rem;
+      font-family: 'Press Start 2P', cursive;
+      font-size: 0.8rem;
+      color: var(--green-4);
+      letter-spacing: 3px;
+      animation: blink 0.8s step-end infinite;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+
+    .loader-bar {
+      width: 220px;
+      height: 12px;
+      background: var(--bg-offwhite);
+      border: 3px solid var(--green-3);
+      margin-top: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loader-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 0%;
+      background: var(--gradient);
+      animation: loadBar 2s steps(20) forwards;
+    }
+
+    @keyframes loadBar { to { width: 100%; } }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 4rem 1.5rem 2rem;
+      position: relative;
+    }
+
+    .logo-container {
+      margin-bottom: 2.5rem;
+      animation: fadeInDown 1s ease-out;
+    }
+
+    .logo-img {
+      max-width: 520px;
+      width: 90vw;
+      height: auto;
+      filter: drop-shadow(6px 6px 0px rgba(26, 122, 58, 0.25));
+      transition: all 0.3s ease;
+      animation: logoFloat 4s ease-in-out infinite;
+    }
+
+    .logo-img:hover {
+      transform: scale(1.06) rotate(-1deg);
+      filter: drop-shadow(8px 8px 0px rgba(26, 122, 58, 0.35));
+    }
+
+    @keyframes logoFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-15px); }
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-50px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slogan {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.65rem, 2.5vw, 0.95rem);
+      color: var(--text-gray);
+      margin-bottom: 3rem;
+      line-height: 2;
+      animation: fadeInUp 1s ease-out 0.3s both;
+      max-width: 700px;
+      padding: 0 1rem;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeInUp 1s ease-out 0.5s both;
+      padding: 0 1rem;
+    }
+
+    .nav a {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.55rem, 2vw, 0.65rem);
+      color: var(--green-4);
+      text-decoration: none;
+      padding: clamp(0.8rem, 2vw, 1rem) clamp(1.2rem, 3vw, 1.8rem);
+      border: 3px solid var(--green-3);
+      background: var(--bg-white);
+      box-shadow: 4px 4px 0px var(--green-3);
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      white-space: nowrap;
+    }
+
+    .nav a:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 7px 7px 0px var(--green-4);
+      background: var(--gradient);
+      color: var(--bg-white);
+    }
+
+    .nav a:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-3);
+    }
+
+    section {
+      padding: clamp(3rem, 8vw, 5rem) clamp(1rem, 4vw, 2rem);
+      position: relative;
+      background: var(--bg-white);
+      border-top: 4px solid var(--green-3);
+      border-bottom: 4px solid var(--green-3);
+    }
+
+    .section-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(1.1rem, 4vw, 2.2rem);
+      color: var(--green-4);
+      text-align: center;
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      text-shadow: 3px 3px 0px rgba(74, 222, 128, 0.3);
+      padding: 0 1rem;
+    }
+
+    .section-subtitle {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.55rem, 2vw, 0.7rem);
+      color: var(--text-gray);
+      text-align: center;
+      margin-bottom: 3rem;
+      line-height: 2;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 0 1rem;
+    }
+
+    .capacitaciones { background: var(--bg-cream); }
+
+    .game-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .cap-item {
+      background: var(--bg-white);
+      border: 4px solid var(--green-3);
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 6px 6px 0px var(--green-3);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cap-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: var(--gradient);
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .cap-item:hover::before { transform: scaleX(1); }
+
+    .cap-item:hover {
+      transform: translate(-5px, -5px);
+      box-shadow: 11px 11px 0px var(--green-4);
+    }
+
+    .cap-item:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-3);
+    }
+
+    .pacman {
+      width: clamp(60px, 15vw, 75px);
+      height: clamp(60px, 15vw, 75px);
+      background: var(--gradient);
+      border: 4px solid var(--green-4);
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.5rem, 4vw, 2.2rem);
+      box-shadow: 4px 4px 0px var(--green-4);
+      animation: chomp 0.4s step-end infinite;
+    }
+
+    @keyframes chomp {
+      0%, 100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 50% 50%); }
+      50% { clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%); }
+    }
+
+    .cap-item p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      color: var(--text-dark);
+      text-align: center;
+      line-height: 2;
+    }
+
+    .game-section {
+      background: var(--bg-offwhite);
+      text-align: center;
+      border: 4px solid var(--green-3);
+      box-shadow: 8px 8px 0px var(--green-4);
+    }
+
+    .game-section h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(1rem, 3.5vw, 1.8rem);
+      color: var(--green-4);
+      margin-bottom: 1.5rem;
+      line-height: 1.7;
+      padding: 0 1rem;
+    }
+
+    .game-section p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.6rem);
+      color: var(--text-gray);
+      margin-bottom: 0.4rem;
+      line-height: 2.2;
+      padding: 0 1rem;
+    }
+
+    .game-section b { color: var(--green-3); }
+
+    .hud {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      padding: 0 1rem;
+    }
+
+    #score {
+      color: #d946ef;
+      background: var(--bg-white);
+      padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(1rem, 2.5vw, 1.3rem);
+      border: 3px solid #d946ef;
+      box-shadow: 3px 3px 0px #d946ef;
+    }
+
+    #lives {
+      color: #ef4444;
+      background: var(--bg-white);
+      padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(1rem, 2.5vw, 1.3rem);
+      border: 3px solid #ef4444;
+      box-shadow: 3px 3px 0px #ef4444;
+    }
+
+    #musicBtn {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      background: var(--gradient);
+      border: 3px solid var(--green-4);
+      padding: clamp(0.5rem, 1.5vw, 0.7rem) clamp(1rem, 2.5vw, 1.8rem);
+      cursor: pointer;
+      color: var(--bg-white);
+      box-shadow: 4px 4px 0px var(--green-4);
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+
+    #musicBtn:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 7px 7px 0px var(--green-4);
+    }
+
+    #musicBtn:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-4);
+    }
+
+    #musicBtn.playing {
+      animation: btnPulse 0.4s step-end infinite;
+    }
+
+    @keyframes btnPulse {
+      0%, 100% { background: var(--gradient); }
+      50% { background: var(--green-4); }
+    }
+
+    .canvas-container {
+      display: flex;
+      justify-content: center;
+      margin-top: 2rem;
+      padding: 0 1rem;
+    }
+
+    #catGame {
+      border: 4px solid var(--green-3);
+      box-shadow: 6px 6px 0px var(--green-4);
+      max-width: 100%;
+      height: auto;
+      background: #1a1a2e;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    footer {
+      background: var(--bg-offwhite);
+      padding: clamp(3rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem) clamp(1.5rem, 3vw, 2rem);
+      text-align: center;
+      border-top: 4px solid var(--green-3);
+    }
+
+    footer p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.6rem);
+      color: var(--text-gray);
+      margin-bottom: 2rem;
+      line-height: 2.2;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+      flex-wrap: wrap;
+    }
+
+    .social-icons a {
+      width: clamp(45px, 10vw, 55px);
+      height: clamp(45px, 10vw, 55px);
+      background: var(--bg-white);
+      border: 3px solid var(--green-3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      box-shadow: 4px 4px 0px var(--green-3);
+    }
+
+    .social-icons a:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 8px 8px 0px var(--green-4);
+      background: var(--gradient);
+    }
+
+    .social-icons a:hover img { filter: brightness(0) invert(1); }
+
+    .social-icons a:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-3);
+    }
+
+    .social-icons img {
+      width: clamp(20px, 5vw, 26px);
+      height: clamp(20px, 5vw, 26px);
+      transition: filter 0.2s ease;
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 3px dashed var(--green-3);
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.4rem, 1.2vw, 0.5rem);
+      color: var(--text-gray);
+      line-height: 2.5;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 0.7s ease;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    ::-webkit-scrollbar { width: 14px; }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-offwhite);
+      border: 2px solid var(--green-3);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--gradient);
+      border: 2px solid var(--green-3);
+    }
+    ::-webkit-scrollbar-thumb:hover { background: var(--green-2); }
+
+    .pixel-corner {
+      position: fixed;
+      width: clamp(20px, 5vw, 25px);
+      height: clamp(20px, 5vw, 25px);
+      border: 3px solid var(--green-3);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .pixel-corner.tl { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+    .pixel-corner.tr { top: 15px; right: 15px; border-left: none; border-bottom: none; }
+    .pixel-corner.bl { bottom: 15px; left: 15px; border-right: none; border-top: none; }
+    .pixel-corner.br { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+    @media (max-width: 768px) {
+      .nav {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: center;
+      }
+      .nav a {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+      .game-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .hud {
+        flex-direction: column;
+        gap: 0.8rem;
+        align-items: center;
+      }
+      #score, #lives, #musicBtn {
+        width: 100%;
+        max-width: 280px;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .logo-img { max-width: 300px; }
+      .cap-item { padding: 1.5rem; }
+      .pixel-corner { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <!-- LOADER -->
+  <div class="loader" id="loader">
+    <img src="https://image.qwenlm.ai/public_source/134ee7b1-655c-4372-a2ff-a92db53e9a3d/1845a3733-8072-4100-aa1f-b666b70c2e2d.png" alt="Waffles Tech" class="loader-logo">
+    <p class="loader-text">LOADING...</p>
+    <div class="loader-bar"></div>
+  </div>
+
+  <!-- THREE.JS 3D CITY BACKGROUND -->
+  <canvas id="three-bg"></canvas>
+  
+  <!-- RETRO EFFECTS -->
+  <div class="scanlines"></div>
+  <div class="retro-grid"></div>
+
+  <!-- PIXEL CORNERS -->
+  <div class="pixel-corner tl"></div>
+  <div class="pixel-corner tr"></div>
+  <div class="pixel-corner bl"></div>
+  <div class="pixel-corner br"></div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="logo-container">
+      <img src="https://image.qwenlm.ai/public_source/134ee7b1-655c-4372-a2ff-a92db53e9a3d/1845a3733-8072-4100-aa1f-b666b70c2e2d.png" alt="Waffles Tech" class="logo-img">
+    </div>
+    
+    <p class="slogan">El futuro empezó aquí y continuará.</p>
+    
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="nosotros.html">Historia</a>
+    </nav>
+  </section>
+
+  <!-- CAPACITACIONES -->
+  <section class="capacitaciones reveal">
+    <h2 class="section-title">🎮 PRÓXIMAS CAPACITACIONES</h2>
+    <p class="section-subtitle">Explora nuestros cursos como si fueran un juego arcade 🚀</p>
+    
+    <div class="game-grid">
+      <div class="cap-item" onclick="contacto('unity')">
+        <div class="pacman">🎮</div>
+        <p>Unity – Desarrollo de Videojuegos</p>
+      </div>
+      
+      <div class="cap-item" onclick="contacto('python')">
+        <div class="pacman">🐍</div>
+        <p>Automatizaciones con Python / Business Intelligence</p>
+      </div>
+      
+      <div class="cap-item" onclick="contacto('cloud')">
+        <div class="pacman">☁️</div>
+        <p>Capacítate sobre la nube (AWS, Azure)</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GAME SECTION -->
+  <section class="game-section reveal">
+    <h2>🐱 DEMO ARCADE: PELEA PRESIDENTE</h2>
+    <p>INSTRUCCIONES</p>
+    <p>PRESIONA <b>ESPACIO</b> PARA SALTAR Y <b>A+S</b> PARA SALTAR MÁS ALTO 🚀</p>
+    <p>PRESIONA <b>X</b> PARA LANZAR PROYECTILES <b>X+P</b> PARA EVOLUCIONAR 🚀</p>
+    
+    <div class="hud">
+      <span id="score">PUNTOS: 0</span>
+      <span id="lives">❤️❤️❤️</span>
+      <button id="musicBtn">🎵 MUSICA</button>
+    </div>
+    
+    <div class="canvas-container">
+      <canvas id="catGame" width="600" height="300"></canvas>
+    </div>
+  </section>
+
+  <!-- AUDIO -->
+  <audio id="bgMusic" src="audio/musica.mp3" loop></audio>
+  <audio id="bgMusic1" src="audio/level2.mp3" loop></audio>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>WAFFLES TECH DESDE 2024 🚀</p>
+    
+    <div class="social-icons">
+      <a href="https://github.com/tuusuario" target="_blank" title="GitHub">
+        <img src="assets/icons/github.svg" alt="GitHub">
+      </a>
+      <a href="https://linkedin.com/in/tuusuario" target="_blank" title="LinkedIn">
+        <img src="assets/icons/link.svg" alt="LinkedIn">
+      </a>
+      <a href="https://tiktok.com/@tuusuario" target="_blank" title="TikTok">
+        <img src="assets/icons/tik.svg" alt="TikTok">
+      </a>
+    </div>
+    
+    <div class="footer-bottom">
+      <p>© 2024 WAFFLES TECH. TODOS LOS DERECHOS RESERVADOS.</p>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
+  <script src="gamereal.js"></script>
+  
+  <script>
+    // ===== LOADER =====
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.getElementById('loader').classList.add('hidden');
+      }, 2000);
+    });
+
+    // ===== THREE.JS 3D CITY - FLY THROUGH EFFECT =====
+    function initThreeJS() {
+      const canvas = document.getElementById('three-bg');
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(0xfafaf8);
+      scene.fog = new THREE.Fog(0xfafaf8, 20, 80);
+      
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      renderer.shadowMap.enabled = true;
+
+      const buildingColors = [0x6ee78a, 0x4ade80, 0x2d9d4c, 0x1a7a3a, 0x86efac];
+      const allObjects = [];
+
+      // ===== EDIFICIOS QUE VOLARÁN HACIA LA CÁMARA =====
+      function createBuilding() {
+        const height = 4 + Math.random() * 15;
+        const width = 2 + Math.random() * 4;
+        const depth = 2 + Math.random() * 4;
+        
+        const buildingGeo = new THREE.BoxGeometry(width, height, depth);
+        const buildingMat = new THREE.MeshPhongMaterial({
+          color: buildingColors[Math.floor(Math.random() * buildingColors.length)],
+          shininess: 50
+        });
+        
+        const building = new THREE.Mesh(buildingGeo, buildingMat);
+        
+        // Posición inicial: lejos en el fondo, posición X/Y aleatoria
+        building.position.x = (Math.random() - 0.5) * 80;
+        building.position.y = (Math.random() - 0.5) * 50;
+        building.position.z = -80 - Math.random() * 40; // Lejos en el fondo
+        building.rotation.y = Math.random() * Math.PI / 4;
+        
+        // Ventanas
+        const windowsGroup = new THREE.Group();
+        const windowGeo = new THREE.BoxGeometry(0.2, 0.4, 0.15);
+        const windowMat = new THREE.MeshBasicMaterial({ color: 0xffffaa });
+        
+        const rows = Math.floor(height / 2);
+        const cols = Math.floor(width / 1);
+        
+        for (let row = 0; row < rows; row++) {
+          for (let col = 0; col < cols; col++) {
+            if (Math.random() > 0.4) {
+              const w1 = new THREE.Mesh(windowGeo, windowMat);
+              w1.position.set(-width/2 + 0.5 + col, -height/2 + 1.5 + row * 2, depth/2 + 0.1);
+              windowsGroup.add(w1);
+              
+              const w2 = new THREE.Mesh(windowGeo, windowMat);
+              w2.position.set(-width/2 + 0.5 + col, -height/2 + 1.5 + row * 2, -depth/2 - 0.1);
+              windowsGroup.add(w2);
+            }
+          }
+        }
+        
+        building.add(windowsGroup);
+        scene.add(building);
+        
+        return {
+          mesh: building,
+          windows: windowsGroup,
+          speed: 0.3 + Math.random() * 0.4, // Velocidad hacia la cámara
+          rotationSpeed: (Math.random() - 0.5) * 0.02
+        };
+      }
+
+      // Crear 40 edificios iniciales
+      for (let i = 0; i < 40; i++) {
+        allObjects.push(createBuilding());
+      }
+
+      // ===== RASCACIELOS CON ANTENAS =====
+      function createSkyscraper() {
+        const towerGeo = new THREE.CylinderGeometry(1, 1.5, 20 + Math.random() * 15, 6);
+        const towerMat = new THREE.MeshPhongMaterial({
+          color: 0x2d9d4c,
+          shininess: 80
+        });
+        
+        const tower = new THREE.Mesh(towerGeo, towerMat);
+        tower.position.x = (Math.random() - 0.5) * 70;
+        tower.position.y = (Math.random() - 0.5) * 40;
+        tower.position.z = -80 - Math.random() * 40;
+        
+        // Antena
+        const antennaGeo = new THREE.CylinderGeometry(0.15, 0.15, 4, 8);
+        const antennaMat = new THREE.MeshBasicMaterial({ color: 0x4ade80 });
+        const antenna = new THREE.Mesh(antennaGeo, antennaMat);
+        antenna.position.y = 12;
+        tower.add(antenna);
+        
+        // Luz parpadeante
+        const lightGeo = new THREE.SphereGeometry(0.4, 8, 8);
+        const lightMat = new THREE.MeshBasicMaterial({ color: 0xff4444 });
+        const light = new THREE.Mesh(lightGeo, lightMat);
+        light.position.y = 14;
+        tower.add(light);
+        
+        scene.add(tower);
+        
+        return {
+          mesh: tower,
+          light: light,
+          speed: 0.25 + Math.random() * 0.3,
+          rotationSpeed: (Math.random() - 0.5) * 0.01
+        };
+      }
+
+      for (let i = 0; i < 10; i++) {
+        allObjects.push(createSkyscraper());
+      }
+
+      // ===== ESFERAS DE ENERGÍA =====
+      function createEnergySphere() {
+        const sphereGeo = new THREE.SphereGeometry(2 + Math.random() * 2, 16, 16);
+        const sphereMat = new THREE.MeshPhongMaterial({
+          color: 0x4ade80,
+          transparent: true,
+          opacity: 0.6,
+          shininess: 100
+        });
+        
+        const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+        sphere.position.x = (Math.random() - 0.5) * 80;
+        sphere.position.y = (Math.random() - 0.5) * 50;
+        sphere.position.z = -80 - Math.random() * 40;
+        
+        // Anillo
+        const ringGeo = new THREE.TorusGeometry(3.5, 0.25, 8, 24);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x6ee78a });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = Math.PI / 2;
+        sphere.add(ring);
+        
+        scene.add(sphere);
+        
+        return {
+          mesh: sphere,
+          ring: ring,
+          speed: 0.5 + Math.random() * 0.3,
+          rotationSpeed: (Math.random() - 0.5) * 0.04
+        };
+      }
+
+      for (let i = 0; i < 8; i++) {
+        allObjects.push(createEnergySphere());
+      }
+
+      // ===== NAVE / DRON =====
+      const droneGroup = new THREE.Group();
+      
+      const bodyGeo = new THREE.ConeGeometry(1.2, 4, 8);
+      const bodyMat = new THREE.MeshPhongMaterial({ color: 0x2d9d4c, shininess: 100 });
+      const body = new THREE.Mesh(bodyGeo, bodyMat);
+      body.rotation.x = Math.PI / 2;
+      droneGroup.add(body);
+      
+      const wingGeo = new THREE.BoxGeometry(5, 0.3, 2);
+      const wingMat = new THREE.MeshPhongMaterial({ color: 0x4ade80 });
+      const wings = new THREE.Mesh(wingGeo, wingMat);
+      wings.position.z = 0.8;
+      droneGroup.add(wings);
+      
+      const lightGeo = new THREE.SphereGeometry(0.25, 8, 8);
+      const lightMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+      const lightL = new THREE.Mesh(lightGeo, lightMat);
+      lightL.position.set(-2.2, 0, 1.2);
+      droneGroup.add(lightL);
+      const lightR = new THREE.Mesh(lightGeo, lightMat);
+      lightR.position.set(2.2, 0, 1.2);
+      droneGroup.add(lightR);
+      
+      droneGroup.position.set(0, 5, -30);
+      scene.add(droneGroup);
+
+      // ===== GRID SUELO =====
+      const gridHelper = new THREE.GridHelper(200, 100, 0x2d9d4c, 0x1a7a3a);
+      gridHelper.position.y = -40;
+      gridHelper.material.opacity = 0.25;
+      gridHelper.material.transparent = true;
+      scene.add(gridHelper);
+
+      // ===== LUCES =====
+      const ambient = new THREE.AmbientLight(0xffffff, 0.7);
+      scene.add(ambient);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 0.9);
+      dirLight.position.set(15, 30, 15);
+      dirLight.castShadow = true;
+      scene.add(dirLight);
+
+      const pointLight1 = new THREE.PointLight(0x4ade80, 0.7, 70);
+      pointLight1.position.set(-15, 15, 10);
+      scene.add(pointLight1);
+
+      camera.position.z = 15;
+      camera.position.y = 5;
+
+      // ===== ANIMACIÓN PRINCIPAL =====
+      let time = 0;
+      let droneAngle = 0;
+      let frameCount = 0;
+
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.015;
+        frameCount++;
+
+        // Mover todos los objetos HACIA la cámara
+        allObjects.forEach((obj, index) => {
+          // Mover hacia adelante (Z positivo = hacia la cámara)
+          obj.mesh.position.z += obj.speed;
+          obj.mesh.rotation.y += obj.rotationSpeed;
+          
+          // Animaciones específicas
+          if (obj.windows) {
+            // Edificio - parpadeo de ventanas
+            obj.windows.children.forEach((w, idx) => {
+              if (idx % 3 === 0) {
+                w.material.opacity = 0.5 + Math.sin(time * 3 + idx) * 0.5;
+              }
+            });
+          }
+          
+          if (obj.light) {
+            // Rascacielos - luz parpadeante
+            obj.light.material.opacity = 0.5 + Math.sin(time * 5) * 0.5;
+          }
+          
+          if (obj.ring) {
+            // Esfera - anillo giratorio
+            obj.ring.rotation.z += 0.05;
+            obj.mesh.scale.setScalar(1 + Math.sin(time * 2) * 0.15);
+          }
+          
+          // ===== CUANDO PASA LA CÁMARA (Z > 20) =====
+          if (obj.mesh.position.z > 20) {
+            // Resetear al fondo con nueva posición aleatoria
+            obj.mesh.position.z = -120 - Math.random() * 30;
+            obj.mesh.position.x = (Math.random() - 0.5) * 80;
+            obj.mesh.position.y = (Math.random() - 0.5) * 50;
+            
+            // Nueva rotación aleatoria
+            obj.mesh.rotation.y = Math.random() * Math.PI;
+          }
+        });
+
+        // ===== DRON VOLANDO EN CÍRCULOS =====
+        droneAngle += 0.025;
+        droneGroup.position.x = Math.sin(droneAngle) * 30;
+        droneGroup.position.z = Math.cos(droneAngle) * 20 - 25;
+        droneGroup.rotation.y = -droneAngle + Math.PI / 2;
+        droneGroup.position.y = 5 + Math.sin(time * 3) * 4;
+
+        // Grid en movimiento
+        gridHelper.position.z = (frameCount * 0.5) % 2;
+
+        // Cámara con movimiento suave
+        camera.position.x = Math.sin(time * 0.25) * 5;
+        camera.position.y = 5 + Math.cos(time * 0.18) * 3;
+        camera.lookAt(0, 0, -15);
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // ===== RESIZE =====
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    }
+
+    initThreeJS();
+
+    // ===== SCROLL REVEAL =====
+    function revealOnScroll() {
+      document.querySelectorAll('.reveal').forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight - 100) {
+          el.classList.add('active');
+        }
+      });
+    }
+
+    window.addEventListener('scroll', revealOnScroll);
+    revealOnScroll();
+
+    // ===== CONTACTO =====
+    function contacto(curso) {
+      const msg = encodeURIComponent(`Hola, estoy interesado en la capacitación de ${curso.toUpperCase()} 🚀`);
+      window.open(`https://wa.me/51977740994?text=${msg}`, '_blank');
+    }
+
+    // ===== MUSICA =====
+    const musicBtn = document.getElementById('musicBtn');
+    const bgMusic = document.getElementById('bgMusic');
+    let isPlaying = false;
+
+    musicBtn.addEventListener('click', () => {
+      if (isPlaying) {
+        bgMusic.pause();
+        musicBtn.textContent = '🎵 MUSICA';
+        musicBtn.classList.remove('playing');
+      } else {
+        bgMusic.play().catch(e => console.log('Audio:', e));
+        musicBtn.textContent = '⏸️ PAUSA';
+        musicBtn.classList.add('playing');
+      }
+      isPlaying = !isPlaying;
+    });
+
+    // ===== CANVAS GAME =====
+    const canvas = document.getElementById('catGame');
+    const ctx = canvas.getContext('2d');
+    let gameFrame = 0;
+    let score = 0;
+
+    function animateCanvas() {
+      ctx.fillStyle = 'rgba(26, 26, 46, 0.5)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.strokeStyle = 'rgba(74, 222, 128, 0.35)';
+      ctx.lineWidth = 2;
+      const gridSize = 40;
+      const offset = (gameFrame * 2) % gridSize;
+      
+      for (let x = 0; x < canvas.width; x += gridSize) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, canvas.height); ctx.stroke();
+      }
+      for (let y = offset; y < canvas.height; y += gridSize) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(canvas.width, y); ctx.stroke();
+      }
+
+      ctx.strokeStyle = '#4ade80';
+      ctx.lineWidth = 4;
+      ctx.beginPath(); ctx.moveTo(0, canvas.height - 20); ctx.lineTo(canvas.width, canvas.height - 20); ctx.stroke();
+
+      ctx.fillStyle = 'rgba(74, 222, 128, 0.5)';
+      ctx.font = 'bold 20px "Press Start 2P"';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('GAME AREA', canvas.width / 2, canvas.height / 2);
+
+      gameFrame++;
+      if (gameFrame % 180 === 0) {
+        score += Math.floor(Math.random() * 15);
+        document.getElementById('score').textContent = `PUNTOS: ${score}`;
+      }
+      
+      requestAnimationFrame(animateCanvas);
+    }
+    animateCanvas();
+
+    // ===== RESIZE CANVAS =====
+    function resizeCanvas() {
+      const container = document.querySelector('.canvas-container');
+      if (container) {
+        const maxW = Math.min(600, container.clientWidth - 40);
+        canvas.style.width = maxW + 'px';
+        canvas.style.height = (maxW * 0.5) + 'px';
+      }
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    console.log('%c🧇 WAFFLES TECH', 'font-size: 28px; font-weight: bold; color: #2d9d4c;');
+    console.log('%cEL FUTURO EMPEZÓ AQUÍ', 'font-size: 14px; color: #1a7a3a;');
+  </script>
+</body>
+</html>
+
