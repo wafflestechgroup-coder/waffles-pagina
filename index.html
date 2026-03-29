@@ -435,15 +435,17 @@
       padding: 0 1rem;
     }
 
-    #catGame {
-      border: 4px solid var(--green-3);
-      box-shadow: 6px 6px 0px var(--green-4);
-      max-width: 100%;
-      height: auto;
-      background: #1a1a2e;
-      width: 100%;
-      max-width: 600px;
-    }
+   #catGame {
+  border: 4px solid var(--green-3);
+  box-shadow: 6px 6px 0px var(--green-4);
+  background: #1a1a2e;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 2 / 1; /* Mantiene proporción 600x300 */
+  image-rendering: pixelated; /* Para estilo retro */
+ }
 
     footer {
       background: var(--bg-offwhite);
