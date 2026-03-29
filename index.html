@@ -931,13 +931,23 @@
 
     // ===== RESIZE CANVAS =====
     function resizeCanvas() {
-      const container = document.querySelector('.canvas-container');
-      if (container) {
-        const maxW = Math.min(600, container.clientWidth - 40);
-        canvas.style.width = maxW + 'px';
-        canvas.style.height = (maxW * 0.5) + 'px';
-      }
-    }
+  const container = document.querySelector('.canvas-container');
+  if (!container || !canvas) return;
+  
+  const maxW = Math.min(600, container.clientWidth - 40);
+  const scale = window.devicePixelRatio || 1;
+  
+  // Ajustar atributos reales del canvas (no solo CSS)
+  canvas.width = maxW * scale;
+  canvas.height = (maxW * 0.5) * scale;
+  
+  // Ajustar estilo visual
+  canvas.style.width = maxW + 'px';
+  canvas.style.height = (maxW * 0.5) + 'px';
+  
+  // Escalar el contexto para mantener nitidez
+  ctx.scale(scale, scale);
+}
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
