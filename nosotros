@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nosotros | WAFFLES TECH</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <style>
+    :root {
+      --green-1: #6ee78a;
+      --green-2: #4ade80;
+      --green-3: #2d9d4c;
+      --green-4: #1a7a3a;
+      --gradient: linear-gradient(180deg, #6ee78a 0%, #4ade80 50%, #2d9d4c 100%);
+      --bg-white: #ffffff;
+      --bg-cream: #fafaf8;
+      --bg-offwhite: #f5f5f0;
+      --text-dark: #1a1a2e;
+      --text-gray: #666677;
+      --ceo-color: #f59e0b;
+      --ingeniero-color: #06b6d4;
+      --arte-color: #f472b6;
+      --design-color: #8b5cf6;
+      --music-color: #ef4444;
+      --bi-color: #10b981;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-cream);
+      color: var(--text-dark);
+      overflow-x: hidden;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    #three-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .scanlines {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(26, 122, 58, 0.04) 2px, rgba(26, 122, 58, 0.04) 4px);
+      animation: scanMove 10s linear infinite;
+    }
+
+    @keyframes scanMove {
+      0% { background-position: 0 0; }
+      100% { background-position: 0 100px; }
+    }
+
+    .retro-grid {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      background-image: 
+        linear-gradient(rgba(74, 222, 128, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(74, 222, 128, 0.08) 1px, transparent 1px);
+      background-size: 60px 60px;
+      opacity: 0.6;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      padding: 3rem 1.5rem 2rem;
+      text-align: center;
+      background: var(--bg-white);
+      border-bottom: 4px solid var(--green-3);
+      position: relative;
+      z-index: 10;
+    }
+
+    .header h1 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      color: var(--green-4);
+      margin-bottom: 1.5rem;
+      text-shadow: 4px 4px 0px rgba(74, 222, 128, 0.3);
+      animation: fadeInDown 0.8s ease-out;
+      letter-spacing: 8px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease-out 0.3s both;
+    }
+
+    .nav a {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.55rem, 2vw, 0.65rem);
+      color: var(--green-4);
+      text-decoration: none;
+      padding: clamp(0.8rem, 2vw, 1rem) clamp(1.2rem, 3vw, 1.8rem);
+      border: 3px solid var(--green-3);
+      background: var(--bg-white);
+      box-shadow: 4px 4px 0px var(--green-3);
+      transition: all 0.15s ease;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .nav a:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: 7px 7px 0px var(--green-4);
+      background: var(--gradient);
+      color: var(--bg-white);
+    }
+
+    .nav a:active {
+      transform: translate(2px, 2px);
+      box-shadow: 2px 2px 0px var(--green-3);
+    }
+
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== SECTIONS ===== */
+    .section {
+      padding: 4rem 1.5rem;
+      background: var(--bg-white);
+      border-top: 4px solid var(--green-3);
+      border-bottom: 4px solid var(--green-3);
+    }
+
+    .section-cream { background: var(--bg-cream); }
+    .section-offwhite { background: var(--bg-offwhite); }
+
+    .section-title {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(1.3rem, 4vw, 2rem);
+      color: var(--green-4);
+      text-align: center;
+      margin-bottom: 3rem;
+      text-shadow: 3px 3px 0px rgba(74, 222, 128, 0.3);
+      padding: 0 1rem;
+    }
+
+    /* ===== MISSION & VISION ===== */
+    .mv-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .mv-card {
+      background: var(--bg-white);
+      border: 4px solid var(--green-3);
+      padding: 2.5rem;
+      box-shadow: 8px 8px 0px var(--green-4);
+      transition: all 0.3s ease;
+      animation: cardEnter 0.8s ease-out both;
+    }
+
+    .mv-card:nth-child(1) { animation-delay: 0.1s; }
+    .mv-card:nth-child(2) { animation-delay: 0.2s; }
+
+    @keyframes cardEnter {
+      from { opacity: 0; transform: translateY(50px) scale(0.9); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .mv-card:hover {
+      transform: translate(-5px, -5px);
+      box-shadow: 13px 13px 0px var(--green-4);
+    }
+
+    .mv-card h2 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(1rem, 3vw, 1.3rem);
+      color: var(--green-4);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .mv-card p {
+      color: var(--text-gray);
+      text-align: center;
+      line-height: 2;
+    }
+
+    .mv-icon {
+      font-size: 3rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* ===== TEAM SECTION ===== */
+    .team-section {
+      background: var(--bg-cream);
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    .team-card {
+      background: var(--bg-white);
+      border: 4px solid var(--green-3);
+      padding: 2rem;
+      box-shadow: 8px 8px 0px var(--green-4);
+      transition: all 0.3s ease;
+      animation: cardEnter 0.8s ease-out both;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .team-card:nth-child(1) { 
+      animation-delay: 0.1s; 
+      border-color: var(--ceo-color);
+      box-shadow: 8px 8px 0px var(--ceo-color);
+    }
+    .team-card:nth-child(2) { 
+      animation-delay: 0.2s;
+      border-color: var(--ingeniero-color);
+      box-shadow: 8px 8px 0px var(--ingeniero-color);
+    }
+    .team-card:nth-child(3) { 
+      animation-delay: 0.3s;
+      border-color: var(--bi-color);
+      box-shadow: 8px 8px 0px var(--bi-color);
+    }
+    .team-card:nth-child(4) { 
+      animation-delay: 0.4s;
+      border-color: var(--arte-color);
+      box-shadow: 8px 8px 0px var(--arte-color);
+    }
+    .team-card:nth-child(5) { 
+      animation-delay: 0.5s;
+      border-color: var(--design-color);
+      box-shadow: 8px 8px 0px var(--design-color);
+    }
+    .team-card:nth-child(6) { 
+      animation-delay: 0.6s;
+      border-color: var(--music-color);
+      box-shadow: 8px 8px 0px var(--music-color);
+    }
+
+    .team-card:hover {
+      transform: translate(-5px, -5px);
+    }
+
+    .team-card:nth-child(1):hover { box-shadow: 13px 13px 0px var(--ceo-color); }
+    .team-card:nth-child(2):hover { box-shadow: 13px 13px 0px var(--ingeniero-color); }
+    .team-card:nth-child(3):hover { box-shadow: 13px 13px 0px var(--bi-color); }
+    .team-card:nth-child(4):hover { box-shadow: 13px 13px 0px var(--arte-color); }
+    .team-card:nth-child(5):hover { box-shadow: 13px 13px 0px var(--design-color); }
+    .team-card:nth-child(6):hover { box-shadow: 13px 13px 0px var(--music-color); }
+
+    .team-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      margin: 0 auto 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      border: 4px solid var(--green-3);
+      background: var(--gradient);
+      animation: avatarPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes avatarPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    .team-card h3 {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.7rem, 2vw, 0.9rem);
+      color: var(--green-4);
+      margin-bottom: 0.5rem;
+      line-height: 1.6;
+    }
+
+    .team-card .role {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      color: var(--text-gray);
+      margin-bottom: 1rem;
+      line-height: 1.8;
+      min-height: 3rem;
+    }
+
+    .team-card p {
+      color: var(--text-gray);
+      font-size: 0.9rem;
+      line-height: 1.8;
+    }
+
+    .team-badge {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1rem;
+    }
+
+    /* ===== PIXEL CORNERS ===== */
+    .pixel-corner {
+      position: fixed;
+      width: clamp(20px, 5vw, 25px);
+      height: clamp(20px, 5vw, 25px);
+      border: 3px solid var(--green-3);
+      pointer-events: none;
+      z-index: 100;
+    }
+
+    .pixel-corner.tl { top: 15px; left: 15px; border-right: none; border-bottom: none; }
+    .pixel-corner.tr { top: 15px; right: 15px; border-left: none; border-bottom: none; }
+    .pixel-corner.bl { bottom: 15px; left: 15px; border-right: none; border-top: none; }
+    .pixel-corner.br { bottom: 15px; right: 15px; border-left: none; border-top: none; }
+
+    /* ===== FOOTER ===== */
+    .footer {
+      background: var(--bg-offwhite);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      border-top: 4px solid var(--green-3);
+      margin-top: auto;
+    }
+
+    .footer p {
+      font-family: 'Press Start 2P', cursive;
+      font-size: clamp(0.5rem, 1.5vw, 0.65rem);
+      color: var(--text-gray);
+      line-height: 2;
+    }
+
+    @media (max-width: 480px) {
+      .pixel-corner { display: none; }
+    }
+
+    @media (max-width: 768px) {
+      .team-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .mv-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- THREE.JS 3D CITY BACKGROUND -->
+  <canvas id="three-bg"></canvas>
+  
+  <!-- RETRO EFFECTS -->
+  <div class="scanlines"></div>
+  <div class="retro-grid"></div>
+
+  <!-- PIXEL CORNERS -->
+  <div class="pixel-corner tl"></div>
+  <div class="pixel-corner tr"></div>
+  <div class="pixel-corner bl"></div>
+  <div class="pixel-corner br"></div>
+
+  <!-- HEADER -->
+  <header class="header">
+    <h1>W A F L E S T E C H</h1>
+    <nav class="nav">
+      <a href="index.html">Inicio</a>
+      <a href="servicios.html">Servicios</a>
+      <a href="contacto.html">Contacto</a>
+      <a href="nosotros.html">Nuestra Historia</a>
+    </nav>
+  </header>
+
+  <!-- MISSION & VISION -->
+  <section class="section section-cream">
+    <h2 class="section-title">🎯 MISIÓN Y VISIÓN</h2>
+    <div class="mv-grid">
+      <div class="mv-card">
+        <div class="mv-icon">🚀</div>
+        <h2>MISIÓN</h2>
+        <p>Ser el equipo Rocket, creando soluciones tecnológicas innovadoras que impulsen el futuro del desarrollo de software y videojuegos.</p>
+      </div>
+      <div class="mv-card">
+        <div class="mv-icon">🌟</div>
+        <h2>VISIÓN</h2>
+        <p>Ser una empresa referente 100% remota en desarrollo de software y videojuegos a través de nuevas tecnologías.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM SECTION -->
+  <section class="section team-section">
+    <h2 class="section-title">👥 NUESTRO EQUIPO</h2>
+    <div class="team-grid">
+      <!-- JUAN MUJICA -->
+      <div class="team-card">
+        <div class="team-badge">⚙️</div>
+        <div class="team-avatar">👨‍💼</div>
+        <h3>JUAN MUJICA</h3>
+        <div class="role">INGENIERO DE PROYECTOS</div>
+        <p>Liderazgo técnico y gestión de proyectos para entregar soluciones de calidad.</p>
+      </div>
+
+      <!-- EDUARDO SANCHEZ -->
+      <div class="team-card">
+        <div class="team-badge">👑</div>
+        <div class="team-avatar">👨‍🎨</div>
+        <h3>EDUARDO SANCHEZ</h3>
+        <div class="role">CEO & PROJECT MANAGER</div>
+        <p>Artista plástico e ingeniero con experiencia en desarrollo de videojuegos y Machine Learning.</p>
+      </div>
+
+      <!-- RENZO VALLE -->
+      <div class="team-card">
+        <div class="team-badge">📊</div>
+        <div class="team-avatar">👨‍💻</div>
+        <h3>RENZO VALLE</h3>
+        <div class="role">BUSINESS INTELLIGENCE</div>
+        <p>Experto en Python, Power BI, base de datos y AWS CERTIFICADO.</p>
+      </div>
+
+      <!-- VIOLETA PEREYRA -->
+      <div class="team-card">
+        <div class="team-badge">🎨</div>
+        <div class="team-avatar">👩‍🎨</div>
+        <h3>VIOLETA PEREYRA</h3>
+        <div class="role">GESTORA DE ARTE</div>
+        <p>Dirección artística y coordinación de assets visuales para nuestros proyectos.</p>
+      </div>
+
+      <!-- ZAIRA SANCHEZ -->
+      <div class="team-card">
+        <div class="team-badge">✨</div>
+        <div class="team-avatar">👩‍💻</div>
+        <h3>ZAIRA SANCHEZ</h3>
+        <div class="role">DISEÑADORA</div>
+        <p>Creación de interfaces y experiencias visuales únicas para cada proyecto.</p>
+      </div>
+
+      <!-- DIZZY ESTEEVE -->
+      <div class="team-card">
+        <div class="team-badge">🎵</div>
+        <div class="team-avatar">🎧</div>
+        <h3>DIZZY ESTEEVE</h3>
+        <div class="role">ARQUITECTURA & MUSICALIZACIÓN</div>
+        <p>Diseño de arquitectura de software y composición de bandas sonoras.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>⚡ WAFFLES TECH DESDE 2024 · YA EXISTIMOS ⚡</p>
+  </footer>
+
+  <script>
+    // ===== THREE.JS 3D CITY OPTIMIZADO =====
+    function initThreeJS() {
+      const canvas = document.getElementById('three-bg');
+      if (!canvas) return;
+      
+      if (typeof THREE === 'undefined') {
+        console.log('Three.js no cargó');
+        return;
+      }
+
+      try {
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xfafaf8);
+        scene.fog = new THREE.Fog(0xfafaf8, 30, 70);
+        
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ 
+          canvas: canvas, 
+          alpha: true, 
+          antialias: false,
+          powerPreference: 'low-power'
+        });
+        
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+
+        const buildingColors = [0x6ee78a, 0x4ade80, 0x2d9d4c, 0x1a7a3a];
+        const allObjects = [];
+
+        function createBuilding() {
+          const height = 5 + Math.random() * 12;
+          const width = 3 + Math.random() * 3;
+          const depth = 3 + Math.random() * 3;
+          
+          const buildingGeo = new THREE.BoxGeometry(width, height, depth);
+          const buildingMat = new THREE.MeshPhongMaterial({
+            color: buildingColors[Math.floor(Math.random() * buildingColors.length)],
+            shininess: 30
+          });
+          
+          const building = new THREE.Mesh(buildingGeo, buildingMat);
+          building.position.x = (Math.random() - 0.5) * 60;
+          building.position.y = (Math.random() - 0.5) * 40;
+          building.position.z = -60 - Math.random() * 30;
+          
+          scene.add(building);
+          
+          return {
+            mesh: building,
+            speed: 0.4 + Math.random() * 0.3,
+            rotationSpeed: (Math.random() - 0.5) * 0.015
+          };
+        }
+
+        for (let i = 0; i < 20; i++) {
+          allObjects.push(createBuilding());
+        }
+
+        function createEnergySphere() {
+          const sphereGeo = new THREE.SphereGeometry(2, 12, 12);
+          const sphereMat = new THREE.MeshPhongMaterial({
+            color: 0x4ade80,
+            transparent: true,
+            opacity: 0.5,
+            shininess: 50
+          });
+          
+          const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+          sphere.position.x = (Math.random() - 0.5) * 60;
+          sphere.position.y = (Math.random() - 0.5) * 40;
+          sphere.position.z = -60 - Math.random() * 30;
+          
+          scene.add(sphere);
+          
+          return {
+            mesh: sphere,
+            speed: 0.6 + Math.random() * 0.2,
+            rotationSpeed: (Math.random() - 0.5) * 0.03
+          };
+        }
+
+        for (let i = 0; i < 5; i++) {
+          allObjects.push(createEnergySphere());
+        }
+
+        const gridHelper = new THREE.GridHelper(150, 50, 0x2d9d4c, 0x1a7a3a);
+        gridHelper.position.y = -30;
+        gridHelper.material.opacity = 0.2;
+        gridHelper.material.transparent = true;
+        scene.add(gridHelper);
+
+        const ambient = new THREE.AmbientLight(0xffffff, 0.6);
+        scene.add(ambient);
+
+        const dirLight = new THREE.DirectionalLight(0xffffff, 0.7);
+        dirLight.position.set(10, 20, 10);
+        scene.add(dirLight);
+
+        camera.position.z = 10;
+        camera.position.y = 3;
+
+        let time = 0;
+
+        function animate() {
+          requestAnimationFrame(animate);
+          time += 0.015;
+
+          allObjects.forEach(obj => {
+            obj.mesh.position.z += obj.speed;
+            obj.mesh.rotation.y += obj.rotationSpeed;
+            
+            if (obj.mesh.position.z > 15) {
+              obj.mesh.position.z = -90;
+              obj.mesh.position.x = (Math.random() - 0.5) * 60;
+              obj.mesh.position.y = (Math.random() - 0.5) * 40;
+            }
+          });
+
+          gridHelper.position.z = (time * 10) % 3;
+
+          camera.position.x = Math.sin(time * 0.2) * 3;
+          camera.position.y = 3 + Math.cos(time * 0.15) * 2;
+          camera.lookAt(0, 0, -10);
+
+          renderer.render(scene, camera);
+        }
+
+        animate();
+
+        window.addEventListener('resize', () => {
+          camera.aspect = window.innerWidth / window.innerHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+      } catch (error) {
+        console.log('Error en Three.js:', error);
+      }
+    }
+
+    setTimeout(initThreeJS, 100);
+  </script>
+</body>
+</html>
+
